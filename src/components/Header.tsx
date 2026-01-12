@@ -10,6 +10,7 @@ import LoginModal from './LoginModal';
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -118,9 +119,56 @@ export default function Header() {
               <span>Aplikasi</span>
             </button>
 
-            <button className="lg:hidden p-2 text-slate-600">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors"
+              aria-label="Toggle menu"
+            >
               <Menu className="w-6 h-6" />
             </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        <div className={`lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 shadow-xl transition-all duration-300 ease-in-out overflow-hidden ${isMobileMenuOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className="flex flex-col p-4 space-y-2">
+            {[
+              { id: 'hero', label: 'Beranda' },
+              { id: 'achievements', label: 'Pencapaian' },
+              { id: 'sebaran', label: 'Sebaran Aset' },
+              { id: 'performance', label: 'Kinerja' },
+              { id: 'analisis', label: 'Analisis' },
+              { id: 'info', label: 'Informasi' },
+            ].map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e) => {
+                  scrollToSection(item.id, e);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors border-b border-slate-50 last:border-0"
+              >
+                {item.label}
+              </a>
+            ))}
+
+            <div className="grid grid-cols-2 gap-3 pt-3 mt-2 border-t border-slate-100">
+              <button
+                onClick={() => {
+                  setIsLoginOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="text-center py-2.5 text-sm font-bold text-[#153e70] bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+              >
+                Masuk
+              </button>
+              <button className="flex items-center justify-center gap-2 bg-[#153e70] text-white py-2.5 rounded-lg text-sm font-bold shadow-sm hover:bg-blue-800 transition-colors">
+                <Grid className="w-4 h-4" />
+                <span>Aplikasi</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>

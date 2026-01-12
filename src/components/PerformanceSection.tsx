@@ -73,7 +73,7 @@ export default function PerformanceSection() {
             <div className="container-custom">
                 <RevealOnScroll>
                     {/* Top Row: Indicators */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 px-4 items-start">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-16 px-4 items-start">
                         <RadialProgress
                             value={100}
                             label="Sertipikasi"

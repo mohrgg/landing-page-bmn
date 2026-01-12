@@ -38,18 +38,18 @@ export default function AchievementsSection() {
 
                             <div className="flex-1 flex flex-col justify-between">
                                 {/* Timeline Horizontal */}
-                                <div className="relative py-10 px-2">
+                                <div className="relative py-10 px-2 overflow-x-auto no-scrollbar">
                                     {/* Line */}
-                                    <div className="absolute top-[50px] left-0 w-full h-1.5 bg-slate-100 -translate-y-1/2 rounded-full"></div>
-                                    <div className="absolute top-[50px] left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-blue-400 -translate-y-1/2 rounded-full origin-left animate-expand-width"></div>
+                                    <div className="absolute top-[50px] left-0 w-full min-w-[300px] h-1.5 bg-slate-100 -translate-y-1/2 rounded-full"></div>
+                                    <div className="absolute top-[50px] left-0 w-full min-w-[300px] h-1.5 bg-gradient-to-r from-blue-600 to-blue-400 -translate-y-1/2 rounded-full origin-left animate-expand-width"></div>
 
                                     {/* Points */}
-                                    <div className="grid grid-cols-5 gap-0 relative z-10">
+                                    <div className="grid grid-cols-5 gap-0 relative z-10 w-full min-w-[300px]">
                                         {[2020, 2021, 2022, 2023, 2024].map((year, index) => (
                                             <div key={year} className="flex flex-col items-center group">
-                                                <div className="w-5 h-5 rounded-full bg-blue-600 border-4 border-white shadow-md mb-4 group-hover:scale-110 transition-transform"></div>
-                                                <span className="text-xs font-bold text-slate-400 mb-1">{year}</span>
-                                                <div className="bg-blue-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm">
+                                                <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-blue-600 border-[3px] md:border-4 border-white shadow-md mb-2 md:mb-4 group-hover:scale-110 transition-transform"></div>
+                                                <span className="text-[10px] md:text-xs font-bold text-slate-400 mb-1">{year}</span>
+                                                <div className="bg-blue-600 text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 md:px-2.5 md:py-1 rounded-full shadow-sm">
                                                     WTP
                                                 </div>
                                             </div>
@@ -84,13 +84,13 @@ export default function AchievementsSection() {
 
                             <div className="flex-1 flex flex-col justify-between">
                                 {/* Timeline Horizontal */}
-                                <div className="relative py-10 px-2">
+                                <div className="relative py-10 px-2 overflow-x-auto no-scrollbar">
                                     {/* Line */}
-                                    <div className="absolute top-[50px] left-0 w-full h-1.5 bg-slate-100 -translate-y-1/2 rounded-full"></div>
-                                    <div className="absolute top-[50px] left-0 w-full h-1.5 bg-gradient-to-r from-yellow-500 to-yellow-300 -translate-y-1/2 rounded-full origin-left animate-expand-width"></div>
+                                    <div className="absolute top-[50px] left-0 w-full min-w-[300px] h-1.5 bg-slate-100 -translate-y-1/2 rounded-full"></div>
+                                    <div className="absolute top-[50px] left-0 w-full min-w-[300px] h-1.5 bg-gradient-to-r from-yellow-500 to-yellow-300 -translate-y-1/2 rounded-full origin-left animate-expand-width"></div>
 
                                     {/* Points */}
-                                    <div className="grid grid-cols-4 gap-0 relative z-10">
+                                    <div className="grid grid-cols-4 gap-0 relative z-10 w-full min-w-[300px]">
                                         {[
                                             { year: 2022, val: '2.75' },
                                             { year: 2023, val: '3.15' },
@@ -98,9 +98,9 @@ export default function AchievementsSection() {
                                             { year: 2025, val: 'Target' }
                                         ].map((item, index) => (
                                             <div key={item.year} className="flex flex-col items-center group">
-                                                <div className={`w-5 h-5 rounded-full border-4 border-white shadow-md mb-4 group-hover:scale-110 transition-transform ${index === 3 ? 'bg-slate-300' : 'bg-yellow-500'}`}></div>
-                                                <span className="text-xs font-bold text-slate-400 mb-1">{item.year}</span>
-                                                <div className={`text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm ${index === 3 ? 'bg-slate-100 text-slate-500' : 'bg-yellow-100 text-yellow-700'}`}>
+                                                <div className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-[3px] md:border-4 border-white shadow-md mb-2 md:mb-4 group-hover:scale-110 transition-transform ${index === 3 ? 'bg-slate-300' : 'bg-yellow-500'}`}></div>
+                                                <span className="text-[10px] md:text-xs font-bold text-slate-400 mb-1">{item.year}</span>
+                                                <div className={`text-[9px] md:text-[10px] font-bold px-2 py-0.5 md:px-2.5 md:py-1 rounded-full shadow-sm ${index === 3 ? 'bg-slate-100 text-slate-500' : 'bg-yellow-100 text-yellow-700'}`}>
                                                     {item.val}
                                                 </div>
                                             </div>
