@@ -12,9 +12,12 @@ Tujuan utama aplikasi ini adalah mengubah data BMN yang kompleks menjadi visuali
 
 **Fitur Utama:**
 *   **Hero Section "Visionary"**: Tampilan awal yang megah dengan tipografi *bold*, animasi *staggered reveal*, dan navigasi *glassmorphism*.
+*   **Pencapaian (Achievements)**: Timeline interaktif yang menampilkan prestasi "Opini BPK (WTP)" 5 tahun berturut-turut dan tren kenaikan Indeks Pengelolaan Aset (IPA).
+*   **Kinerja Aset (Performance)**: Visualisasi data kinerja pengelolaan BMN meliputi Sertipikasi, PSP, Asuransi, dan SBSK menggunakan grafik *radial* dan *pie chart* yang responsif.
 *   **Peta Interaktif Indonesia**: Visualisasi SVG interaktif yang menampilkan sebaran aset di berbagai Satuan Kerja (Satker) daerah.
 *   **Analisis Efisiensi (Dashboard)**: Grafik interaktif (Bar Chart & Tabel) untuk memantau indikator belanja modal, efisiensi aset, dan PNBP (Penerimaan Negara Bukan Pajak).
-*   **Sekilas Info (Bento Grid)**: Penyajian informasi kartu (Cards) yang responsif berisi skor IPA (Indeks Pengelolaan Aset), penggunaan aset, asuransi, peraturan, dan kompetensi SDM.
+*   **Sekilas Info (Bento Grid)**: Penyajian informasi kartu (Cards) yang responsif berisi skor IPA, penggunaan aset, asuransi, peraturan, dan kompetensi SDM.
+*   **Responsif Mobile & Tablet**: Optimalisasi tampilan untuk layar kecil, termasuk menu navigasi *mobile drawer* dan *scrollable timeline*.
 *   **Animasi Global**: Pengalaman pengguna yang halus dengan efek *fade-in* dan *slide-up* saat digulir (Scroll-Triggered Animations).
 *   **Login Modal**: Akses masuk untuk pegawai dengan antarmuka modern.
 
@@ -64,9 +67,12 @@ Pastikan Node.js sudah terinstal (disarankan v18+).
 *   `src/app`: Halaman utama (*routes*) dan layout global (`layout.tsx`, `page.tsx`).
 *   `src/components`: Komponen UI modular.
     *   `HeroSection.tsx`: Bagian atas utama.
+    *   `AchievementsSection.tsx`: Timeline Opini BPK & IPA.
     *   `IndonesiaMap.tsx`: Logika peta SVG.
+    *   `PerformanceSection.tsx`: Grafik Kinerja Aset.
     *   `EfficiencySection.tsx`: Grafik Recharts.
     *   `InfoSection.tsx`: Grid informasi (Bento).
+    *   `Header.tsx`: Navigasi responsif (Desktop & Mobile).
     *   `ui/RevealOnScroll.tsx`: *Utility* pembungkus animasi.
 *   `public/images`: Aset gambar statis.
 
