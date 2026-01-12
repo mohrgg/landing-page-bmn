@@ -70,7 +70,9 @@ export default function Header() {
           <nav className="hidden lg:flex items-center bg-slate-50/50 rounded-full px-2 py-1 border border-slate-100">
             {[
               { id: 'hero', label: 'Beranda' },
+              { id: 'achievements', label: 'Pencapaian' },
               { id: 'sebaran', label: 'Sebaran Aset' },
+              { id: 'performance', label: 'Kinerja' },
               { id: 'analisis', label: 'Analisis' },
               { id: 'info', label: 'Informasi' },
             ].map((item) => (
