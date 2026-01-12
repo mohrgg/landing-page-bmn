@@ -1,26 +1,166 @@
 @import "tailwindcss";
 
+/* ========================================
+   LANDING PAGE BMN - PREMIUM KEMNAKER STYLE
+   ======================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors - Kemnaker Official Palette */
+  --kemnaker-blue: #153e70;
+  /* Deep Navy Blue */
+  --kemnaker-blue-light: #2563eb;
+  /* Bright Blue for buttons/links */
+  --kemnaker-gold: #c9a227;
+  /* Gold accent */
+  --text-primary: #1e293b;
+  /* Slate 800 */
+  --text-secondary: #64748b;
+  /* Slate 500 */
+  --border-subtle: #e2e8f0;
+  /* Slate 200 */
+  --bg-white: #ffffff;
+  --bg-gray: #f8fafc;
+  /* Slate 50 */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+   inline {
+  --color-kemnaker-blue: var(--kemnaker-blue);
+  --color-kemnaker-gold: var(--kemnaker-gold);
+  --font-sans: 'Inter', system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-gray);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-primary {
+  background: var(--kemnaker-blue);
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: #102e52;
+  box-shadow: 0 4px 6px -1px rgba(21, 62, 112, 0.2);
+}
+
+.btn-outline {
+  background: white;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-outline:hover {
+  border-color: var(--kemnaker-blue);
+  color: var(--kemnaker-blue);
+}
+
+/* ========================================
+   CARDS (PREMIUM STYLE)
+   ======================================== */
+
+.card-premium {
+  background: white;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card-premium:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.card-header-clean {
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-weight: 600;
+  color: var(--kemnaker-blue);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ========================================
+   TABLE STYLES (CLEAN)
+   ======================================== */
+
+.table-clean {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.875rem;
+}
+
+.table-clean th {
+  background: #f8fafc;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.table-clean td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.table-clean tr:last-child td {
+  border-bottom: none;
+}
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+
+.section-padding {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.container-custom {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }

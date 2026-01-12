@@ -1,0 +1,30 @@
+import Header from '@/components/Header';
+import SatkerSection from '@/components/SatkerSection';
+import SebaranBMNSection from '@/components/IndonesiaMap';
+import EfficiencySection from '@/components/EfficiencySection';
+import InfoSection from '@/components/InfoSection';
+import Footer from '@/components/Footer';
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-[#f5f7fa]">
+      {/* Header */}
+      <Header />
+
+      {/* Satker Section */}
+      <SatkerSection />
+
+      {/* Sebaran BMN dengan Peta & Tabel */}
+      <SebaranBMNSection />
+
+      {/* Analisis Efisiensi */}
+      <EfficiencySection />
+
+      {/* Sekilas Info BMN */}
+      <InfoSection />
+
+      {/* Footer */}
+      <Footer />
+    </main>
+  );
+}
