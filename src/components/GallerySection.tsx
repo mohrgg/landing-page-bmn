@@ -10,17 +10,18 @@ interface GalleryItem {
     id: number;
     title: string;
     category: string;
+    image: string;
 }
 
 const galleryData: GalleryItem[] = [
-    { id: 1, title: 'Gedung Utama Kemnaker', category: 'Gedung' },
-    { id: 2, title: 'Ruang Rapat Sekjen', category: 'Fasilitas' },
-    { id: 3, title: 'Kegiatan Inventarisasi', category: 'Kegiatan' },
-    { id: 4, title: 'Aset Kendaraan Dinas', category: 'Kendaraan' },
-    { id: 5, title: 'Laboratorium BLK', category: 'Fasilitas' },
-    { id: 6, title: 'Upacara Peringatan Hari Naker', category: 'Kegiatan' },
-    { id: 7, title: 'Penyerahan Sertifikat Tanah', category: 'Kegiatan' },
-    { id: 8, title: 'Gedung Balai K3', category: 'Gedung' },
+    { id: 1, title: 'Gedung Utama Kemnaker', category: 'Gedung', image: 'https://picsum.photos/seed/gedung1/400/400' },
+    { id: 2, title: 'Ruang Rapat Sekjen', category: 'Fasilitas', image: 'https://picsum.photos/seed/rapat/400/400' },
+    { id: 3, title: 'Kegiatan Inventarisasi', category: 'Kegiatan', image: 'https://picsum.photos/seed/inventaris/400/400' },
+    { id: 4, title: 'Aset Kendaraan Dinas', category: 'Kendaraan', image: 'https://picsum.photos/seed/kendaraan/400/400' },
+    { id: 5, title: 'Laboratorium BLK', category: 'Fasilitas', image: 'https://picsum.photos/seed/lab/400/400' },
+    { id: 6, title: 'Upacara Peringatan Hari Naker', category: 'Kegiatan', image: 'https://picsum.photos/seed/upacara/400/400' },
+    { id: 7, title: 'Penyerahan Sertifikat Tanah', category: 'Kegiatan', image: 'https://picsum.photos/seed/sertifikat/400/400' },
+    { id: 8, title: 'Gedung Balai K3', category: 'Gedung', image: 'https://picsum.photos/seed/balai/400/400' },
 ];
 
 export default function GallerySection() {
@@ -69,8 +70,8 @@ export default function GallerySection() {
                                 key={cat}
                                 onClick={() => setFilter(cat)}
                                 className={`px-4 py-2 text-xs font-bold rounded-full transition-all ${filter === cat
-                                        ? 'bg-[#153e70] text-white shadow-md'
-                                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                    ? 'bg-[#153e70] text-white shadow-md'
+                                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                                     }`}
                             >
                                 {cat}
@@ -95,10 +96,12 @@ export default function GallerySection() {
                                     onClick={() => setSelectedImage(item.id)}
                                     className="aspect-square bg-slate-100 rounded-2xl overflow-hidden relative group cursor-pointer"
                                 >
-                                    {/* Placeholder Image */}
-                                    <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-100 flex items-center justify-center">
-                                        <ImageIcon className="w-12 h-12 text-slate-300" />
-                                    </div>
+                                    {/* Image */}
+                                    <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
 
                                     {/* Overlay */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
@@ -157,9 +160,11 @@ export default function GallerySection() {
                             onClick={(e) => e.stopPropagation()}
                             className="max-w-4xl w-full aspect-video bg-slate-800 rounded-2xl overflow-hidden relative"
                         >
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <ImageIcon className="w-24 h-24 text-slate-600" />
-                            </div>
+                            <img
+                                src={galleryData.find(g => g.id === selectedImage)?.image}
+                                alt={galleryData.find(g => g.id === selectedImage)?.title}
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
                             <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
                                 <span className="text-xs text-blue-400 font-bold uppercase tracking-wider">
                                     {galleryData.find(g => g.id === selectedImage)?.category}

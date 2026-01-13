@@ -11,6 +11,7 @@ interface NewsItem {
     excerpt: string;
     date: string;
     category: string;
+    image: string;
     featured?: boolean;
 }
 
@@ -21,6 +22,7 @@ const newsData: NewsItem[] = [
         excerpt: 'Kementerian Ketenagakerjaan kembali meraih opini Wajar Tanpa Pengecualian (WTP) dari Badan Pemeriksa Keuangan atas Laporan Keuangan Tahun 2023.',
         date: '12 Jan 2026',
         category: 'Pencapaian',
+        image: 'https://picsum.photos/seed/wtp/800/400',
         featured: true,
     },
     {
@@ -29,6 +31,7 @@ const newsData: NewsItem[] = [
         excerpt: 'Biro Umum menyelenggarakan sosialisasi terkait kebijakan baru pengelolaan Barang Milik Negara untuk seluruh Satuan Kerja.',
         date: '10 Jan 2026',
         category: 'Pengumuman',
+        image: 'https://picsum.photos/seed/sosialisasi/200/200',
     },
     {
         id: 3,
@@ -36,6 +39,7 @@ const newsData: NewsItem[] = [
         excerpt: 'Program digitalisasi inventarisasi aset BMN menggunakan aplikasi SIMAK BMN versi terbaru telah dimulai.',
         date: '8 Jan 2026',
         category: 'Berita',
+        image: 'https://picsum.photos/seed/digital/200/200',
     },
     {
         id: 4,
@@ -43,6 +47,7 @@ const newsData: NewsItem[] = [
         excerpt: 'Pelaksanaan workshop percepatan sertifikasi tanah BMN bekerja sama dengan BPN di seluruh wilayah Indonesia.',
         date: '5 Jan 2026',
         category: 'Kegiatan',
+        image: 'https://picsum.photos/seed/workshop/200/200',
     },
 ];
 
@@ -80,8 +85,13 @@ export default function NewsSection() {
                                 whileHover={{ y: -5 }}
                                 className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all group"
                             >
-                                <div className="h-56 bg-gradient-to-br from-[#153e70] to-[#2a5d9e] relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-[url('/images/pattern.png')] opacity-10"></div>
+                                <div className="h-56 relative overflow-hidden">
+                                    <img
+                                        src={featuredNews.image}
+                                        alt={featuredNews.title}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                                     <div className="absolute bottom-4 left-4">
                                         <span className="px-3 py-1 bg-[#c9a227] text-white text-xs font-bold rounded-full">
                                             {featuredNews.category}
@@ -119,8 +129,12 @@ export default function NewsSection() {
                                     whileHover={{ x: 5 }}
                                     className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all group flex gap-4"
                                 >
-                                    <div className="w-20 h-20 flex-shrink-0 rounded-xl bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center text-slate-300">
-                                        <Newspaper className="w-8 h-8" />
+                                    <div className="w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden">
+                                        <img
+                                            src={news.image}
+                                            alt={news.title}
+                                            className="w-full h-full object-cover"
+                                        />
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-1">
