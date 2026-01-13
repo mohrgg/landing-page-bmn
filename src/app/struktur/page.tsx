@@ -5,6 +5,7 @@ import { ArrowLeft, Users } from 'lucide-react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Tree, TreeNode } from 'react-organizational-chart';
 
 interface NodeProps {
     name: string;
@@ -13,11 +14,22 @@ interface NodeProps {
     highlight?: boolean;
 }
 
-const OrgNode = ({ name, title, unit, highlight = false }: NodeProps) => (
-    <div className={`org-node ${highlight ? 'org-node-highlight' : ''}`}>
-        <div className="org-name">{name}</div>
-        <div className="org-title">{title}</div>
-        {unit && <div className="org-unit">{unit}</div>}
+const OrgCard = ({ name, title, unit, highlight = false }: NodeProps) => (
+    <div className={`inline-block px-4 py-3 rounded-xl border-2 text-center transition-all hover:shadow-lg hover:-translate-y-1 ${highlight
+            ? 'bg-gradient-to-br from-[#153e70] to-[#2a5d9e] border-[#153e70] text-white'
+            : 'bg-white border-slate-300 hover:border-[#153e70]'
+        }`} style={{ minWidth: '130px', maxWidth: '150px' }}>
+        <div className={`font-bold text-[11px] leading-tight ${highlight ? 'text-white' : 'text-slate-800'}`}>
+            {name}
+        </div>
+        <div className={`text-[9px] font-semibold uppercase mt-1 ${highlight ? 'text-[#c9a227]' : 'text-[#c9a227]'}`}>
+            {title}
+        </div>
+        {unit && (
+            <div className={`text-[8px] mt-1 leading-tight ${highlight ? 'text-white/70' : 'text-slate-500'}`}>
+                {unit}
+            </div>
+        )}
     </div>
 );
 
@@ -63,78 +75,76 @@ export default function StrukturPage() {
                             animate={{ opacity: 1 }}
                             className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 overflow-x-auto"
                         >
-                            <div className="org-chart">
-                                {/* Level 1: Sekretaris Jenderal */}
-                                <ul>
-                                    <li>
-                                        <OrgNode
+                            <div className="min-w-[1100px] py-4">
+                                <Tree
+                                    lineWidth="2px"
+                                    lineColor="#cbd5e1"
+                                    lineBorderRadius="8px"
+                                    label={
+                                        <OrgCard
                                             name="Dr. Cris Kuntadi, S.E., M.M."
-                                            title="SEKRETARIS JENDERAL"
+                                            title="Sekretaris Jenderal"
                                             highlight={true}
                                         />
-
-                                        {/* Level 2: Children */}
-                                        <ul>
-                                            {/* Direktur - aligned right in original but we put in order */}
-                                            <li>
-                                                <OrgNode
-                                                    name="Yoki Yulizar, M.Sc."
-                                                    title="DIREKTUR"
-                                                    unit="Politeknik Ketenagakerjaan"
-                                                />
-                                            </li>
-                                            <li>
-                                                <OrgNode
-                                                    name="Dian Kreshnadjati, S.E, M.M."
-                                                    title="KEPALA BIRO"
-                                                    unit="Organisasi & SDM Aparatur"
-                                                />
-                                            </li>
-                                            <li>
-                                                <OrgNode
-                                                    name="Dr. Narsih, S.Pd., M.M."
-                                                    title="PLT KEPALA BIRO"
-                                                    unit="Keuangan & BMN"
-                                                />
-                                            </li>
-                                            <li>
-                                                <OrgNode
-                                                    name="Muhammad Arif Hidayat"
-                                                    title="KEPALA BIRO"
-                                                    unit="Kerjasama"
-                                                />
-                                            </li>
-                                            <li>
-                                                <OrgNode
-                                                    name="Dr. Narsih, S.Pd., M.M."
-                                                    title="KEPALA PUSAT"
-                                                    unit="Pengembangan SDM Naker"
-                                                />
-                                            </li>
-                                            <li>
-                                                <OrgNode
-                                                    name="Faried A. Nur Yuliono"
-                                                    title="KEPALA BIRO"
-                                                    unit="Humas"
-                                                />
-                                            </li>
-                                            <li>
-                                                <OrgNode
-                                                    name="Surya Lukita Warman"
-                                                    title="PLT KEPALA"
-                                                    unit="Pusat Pasar Kerja"
-                                                />
-                                            </li>
-                                            <li>
-                                                <OrgNode
-                                                    name="Reni Mursidayanti, S.H., M.H."
-                                                    title="KEPALA BIRO"
-                                                    unit="Hukum"
-                                                />
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                    }
+                                >
+                                    <TreeNode label={
+                                        <OrgCard
+                                            name="Yoki Yulizar, M.Sc."
+                                            title="Direktur"
+                                            unit="Politeknik Ketenagakerjaan"
+                                        />
+                                    } />
+                                    <TreeNode label={
+                                        <OrgCard
+                                            name="Dian Kreshnadjati, S.E, M.M."
+                                            title="Kepala Biro"
+                                            unit="Organisasi & SDM Aparatur"
+                                        />
+                                    } />
+                                    <TreeNode label={
+                                        <OrgCard
+                                            name="Dr. Narsih, S.Pd., M.M."
+                                            title="Plt Kepala Biro"
+                                            unit="Keuangan & BMN"
+                                        />
+                                    } />
+                                    <TreeNode label={
+                                        <OrgCard
+                                            name="Muhammad Arif Hidayat"
+                                            title="Kepala Biro"
+                                            unit="Kerjasama"
+                                        />
+                                    } />
+                                    <TreeNode label={
+                                        <OrgCard
+                                            name="Dr. Narsih, S.Pd., M.M."
+                                            title="Kepala Pusat"
+                                            unit="Pengembangan SDM Naker"
+                                        />
+                                    } />
+                                    <TreeNode label={
+                                        <OrgCard
+                                            name="Faried A. Nur Yuliono"
+                                            title="Kepala Biro"
+                                            unit="Humas"
+                                        />
+                                    } />
+                                    <TreeNode label={
+                                        <OrgCard
+                                            name="Surya Lukita Warman"
+                                            title="Plt Kepala"
+                                            unit="Pusat Pasar Kerja"
+                                        />
+                                    } />
+                                    <TreeNode label={
+                                        <OrgCard
+                                            name="Reni Mursidayanti, S.H., M.H."
+                                            title="Kepala Biro"
+                                            unit="Hukum"
+                                        />
+                                    } />
+                                </Tree>
                             </div>
                         </motion.div>
                     </div>
@@ -142,132 +152,6 @@ export default function StrukturPage() {
             </main>
 
             <Footer />
-
-            <style jsx>{`
-                .org-chart {
-                    display: flex;
-                    justify-content: center;
-                    min-width: 1000px;
-                }
-                
-                .org-chart ul {
-                    padding-top: 20px;
-                    position: relative;
-                    display: flex;
-                    justify-content: center;
-                }
-                
-                .org-chart li {
-                    list-style: none;
-                    text-align: center;
-                    position: relative;
-                    padding: 20px 5px 0;
-                }
-                
-                /* Top connector */
-                .org-chart li::before,
-                .org-chart li::after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    border-top: 2px solid #cbd5e1;
-                    width: 50%;
-                }
-                
-                .org-chart li::before {
-                    right: 50%;
-                }
-                
-                .org-chart li::after {
-                    left: 50%;
-                }
-                
-                /* Remove left connector from first child */
-                .org-chart li:first-child::before {
-                    border: none;
-                }
-                
-                /* Remove right connector from last child */
-                .org-chart li:last-child::after {
-                    border: none;
-                }
-                
-                /* Only child - no horizontal line */
-                .org-chart li:only-child::before,
-                .org-chart li:only-child::after {
-                    border: none;
-                }
-                
-                /* Vertical line down from parent */
-                .org-chart ul ul::before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 50%;
-                    border-left: 2px solid #cbd5e1;
-                    height: 20px;
-                }
-                
-                /* Vertical line up from child */
-                .org-chart li::before {
-                    border-left: 2px solid #cbd5e1;
-                    height: 20px;
-                }
-                
-                .org-node {
-                    display: inline-block;
-                    padding: 10px 14px;
-                    border: 2px solid #e2e8f0;
-                    border-radius: 10px;
-                    background: white;
-                    text-align: center;
-                    min-width: 120px;
-                    max-width: 140px;
-                    transition: all 0.2s;
-                }
-                
-                .org-node:hover {
-                    border-color: #153e70;
-                    box-shadow: 0 4px 12px rgba(21, 62, 112, 0.15);
-                    transform: translateY(-2px);
-                }
-                
-                .org-node-highlight {
-                    background: linear-gradient(135deg, #153e70 0%, #2a5d9e 100%);
-                    border-color: #153e70;
-                }
-                
-                .org-node-highlight .org-name {
-                    color: white;
-                }
-                
-                .org-node-highlight .org-title {
-                    color: #c9a227;
-                }
-                
-                .org-name {
-                    font-weight: 700;
-                    font-size: 10px;
-                    color: #1e293b;
-                    line-height: 1.3;
-                    margin-bottom: 3px;
-                }
-                
-                .org-title {
-                    font-size: 8px;
-                    font-weight: 600;
-                    color: #c9a227;
-                    text-transform: uppercase;
-                    letter-spacing: 0.3px;
-                }
-                
-                .org-unit {
-                    font-size: 7px;
-                    color: #64748b;
-                    margin-top: 3px;
-                    line-height: 1.2;
-                }
-            `}</style>
         </div>
     );
 }
