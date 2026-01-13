@@ -28,6 +28,8 @@ export default function ChatWidget() {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const [showTooltip, setShowTooltip] = useState(true);
+
     // Auto-scroll to bottom when new messages arrive
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -37,6 +39,7 @@ export default function ChatWidget() {
     useEffect(() => {
         if (isOpen && !isMinimized) {
             inputRef.current?.focus();
+            setShowTooltip(false);
         }
     }, [isOpen, isMinimized]);
 
@@ -91,17 +94,31 @@ export default function ChatWidget() {
                         className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2"
                     >
                         {/* Tooltip */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5 }}
-                            className="bg-white border border-slate-200 rounded-xl shadow-lg p-3 max-w-[200px] mr-2 relative"
-                        >
-                            <p className="text-xs text-slate-600 leading-relaxed">
-                                <span className="font-bold text-[#153e70]">Hai!</span> Saya <span className="font-semibold">BARAN</span>, maskot BMN Kemnaker. Selamat datang pengguna aset negara! 🎉
-                            </p>
-                            <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white border-b border-r border-slate-200 rotate-45"></div>
-                        </motion.div>
+                        <AnimatePresence>
+                            {showTooltip && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                                    transition={{ delay: 0.5 }}
+                                    className="bg-white border border-slate-200 rounded-xl shadow-lg p-3 max-w-[200px] mr-2 relative"
+                                >
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowTooltip(false);
+                                        }}
+                                        className="absolute -top-2 -right-2 bg-slate-100 hover:bg-slate-200 rounded-full p-1 transition-colors shadow-sm"
+                                    >
+                                        <X className="w-3 h-3 text-slate-500" />
+                                    </button>
+                                    <p className="text-xs text-slate-600 leading-relaxed">
+                                        <span className="font-bold text-[#153e70]">Hai!</span> Saya <span className="font-semibold">BARAN</span>, maskot BMN Kemnaker. Selamat datang pengguna aset negara! 🎉
+                                    </p>
+                                    <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white border-b border-r border-slate-200 rotate-45"></div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* Mascot Button */}
                         <motion.button
