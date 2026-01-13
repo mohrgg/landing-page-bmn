@@ -6,7 +6,7 @@ import PerformanceSection from '@/components/PerformanceSection';
 import EfficiencySection from '@/components/EfficiencySection';
 import InfoSection from '@/components/InfoSection';
 import Footer from '@/components/Footer';
-import FloatingMascot from '@/components/FloatingMascot';
+import ChatWidget from '@/components/ChatWidget';
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
       <EfficiencySection />
       <InfoSection />
       <Footer />
-      <FloatingMascot />
+      <ChatWidget />
     </main>
   );
 }

@@ -111,7 +111,7 @@ export default function DashboardMapSection() {
                             <div>
                                 <h4 className="font-bold text-[#153e70] text-lg group-hover:text-blue-700 transition-colors">Nama Satuan Kerja</h4>
                                 <p className="text-sm text-slate-500 mb-2">Eselon I Kementerian Ketenagakerjaan</p>
-                                <p className="text-xs text-blue-600 font-medium">Lihat Profil Satker →</p>
+                                <a href="/profil-satker" className="text-xs text-blue-600 font-medium hover:underline">Lihat Profil Satker →</a>
                             </div>
                         </div>
                         <div className="flex items-center gap-6 p-6 rounded-2xl bg-slate-50/50 border border-slate-200 hover:border-blue-200 hover:shadow-lg transition-all group cursor-pointer">
@@ -121,7 +121,7 @@ export default function DashboardMapSection() {
                             <div>
                                 <h4 className="font-bold text-[#153e70] text-lg group-hover:text-blue-700 transition-colors">Nama Pejabat</h4>
                                 <p className="text-sm text-slate-500 mb-2">Kepala Balai / Pimpinan</p>
-                                <p className="text-xs text-blue-600 font-medium">Lihat Struktur →</p>
+                                <a href="/struktur" className="text-xs text-blue-600 font-medium hover:underline">Lihat Struktur →</a>
                             </div>
                         </div>
                     </div>
