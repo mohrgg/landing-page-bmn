@@ -109,7 +109,7 @@ export default function NewsSection() {
                                     <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
                                         {featuredNews.excerpt}
                                     </p>
-                                    <Link href="#" className="inline-flex items-center mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700">
+                                    <Link href={`/berita/${featuredNews.id}`} className="inline-flex items-center mt-4 text-sm font-semibold text-blue-600 hover:text-blue-700">
                                         Baca Selengkapnya
                                         <ArrowRight className="w-4 h-4 ml-1" />
                                     </Link>
