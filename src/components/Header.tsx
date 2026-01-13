@@ -83,6 +83,8 @@ export default function Header() {
                   { id: 'performance', label: 'Kinerja' },
                   { id: 'analisis', label: 'Analisis' },
                   { id: 'info', label: 'Informasi' },
+                  { id: 'berita', label: 'Berita' },
+                  { id: 'galeri', label: 'Galeri' },
                 ].map((item) => (
                   <a
                     key={item.id}
@@ -166,6 +168,8 @@ export default function Header() {
               { id: 'performance', label: 'Kinerja' },
               { id: 'analisis', label: 'Analisis' },
               { id: 'info', label: 'Informasi' },
+              { id: 'berita', label: 'Berita' },
+              { id: 'galeri', label: 'Galeri' },
             ].map((item) => (
               <a
                 key={item.id}
