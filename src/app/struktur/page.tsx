@@ -6,53 +6,20 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-interface PejabatCardProps {
+interface NodeProps {
     name: string;
-    role: string;
+    title: string;
     unit?: string;
     highlight?: boolean;
 }
 
-const PejabatCard = ({ name, role, unit, highlight = false }: PejabatCardProps) => (
-    <div className={`px-3 py-2 rounded-lg border-2 text-center ${highlight
-            ? 'bg-[#153e70] border-[#153e70] text-white'
-            : 'bg-white border-slate-300 hover:border-[#153e70] hover:shadow-md transition-all'
-        }`} style={{ width: '140px' }}>
-        <h4 className={`font-bold text-xs leading-tight ${highlight ? 'text-white' : 'text-slate-800'}`}>
-            {name}
-        </h4>
-        <p className={`text-[10px] mt-1 font-semibold uppercase ${highlight ? 'text-[#c9a227]' : 'text-[#c9a227]'}`}>
-            {role}
-        </p>
-        {unit && (
-            <p className={`text-[9px] mt-0.5 leading-tight ${highlight ? 'text-white/70' : 'text-slate-500'}`}>
-                {unit}
-            </p>
-        )}
+const OrgNode = ({ name, title, unit, highlight = false }: NodeProps) => (
+    <div className={`org-node ${highlight ? 'org-node-highlight' : ''}`}>
+        <div className="org-name">{name}</div>
+        <div className="org-title">{title}</div>
+        {unit && <div className="org-unit">{unit}</div>}
     </div>
 );
-
-// Data pejabat sesuai gambar
-const sekjenData = {
-    name: "Dr. Cris Kuntadi, S.E., M.M.",
-    role: "Sekretaris Jenderal"
-};
-
-const direkturData = {
-    name: "Yoki Yulizar, M.Sc.",
-    role: "Direktur",
-    unit: "Politeknik Ketenagakerjaan"
-};
-
-const kepalaBiroData = [
-    { name: "Dian Kreshnadjati, S.E, M.M.", role: "Kepala Biro", unit: "Organisasi & SDM Aparatur" },
-    { name: "Dr. Narsih, S.Pd., M.M.", role: "Plt Kepala Biro", unit: "Keuangan & BMN" },
-    { name: "Muhammad Arif Hidayat, M.Eng, M.P.P.", role: "Kepala Biro", unit: "Kerjasama" },
-    { name: "Dr. Narsih, S.Pd., M.M.", role: "Kepala Pusat", unit: "Pengembangan SDM Ketenagakerjaan" },
-    { name: "Faried Abdurahman Nur Yuliono, S.STP., M.M.", role: "Kepala Biro", unit: "Humas" },
-    { name: "Surya Lukita Warman, B. Eng., M.Sc.", role: "Plt Kepala", unit: "Pusat Pasar Kerja" },
-    { name: "Reni Mursidayanti, S.H., M.H.", role: "Kepala Biro", unit: "Hukum" },
-];
 
 export default function StrukturPage() {
     return (
@@ -60,13 +27,12 @@ export default function StrukturPage() {
             <Header />
 
             <main className="pt-20">
-                {/* Hero Section - mirip Profil Satker */}
+                {/* Hero Section */}
                 <section className="bg-gradient-to-br from-[#153e70] via-[#1e4a82] to-[#2a5d9e] relative overflow-hidden">
                     <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern.png')]"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 
                     <div className="container-custom relative z-10">
-                        {/* Breadcrumb */}
                         <div className="pt-8 pb-4">
                             <Link href="/" className="inline-flex items-center text-white/70 hover:text-white transition-colors text-sm">
                                 <ArrowLeft className="w-4 h-4 mr-2" />
@@ -74,12 +40,8 @@ export default function StrukturPage() {
                             </Link>
                         </div>
 
-                        {/* Title */}
                         <div className="pb-12 pt-4 text-center">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                            >
+                            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                                 <div className="flex items-center justify-center gap-2 mb-4">
                                     <Users className="w-6 h-6 text-[#c9a227]" />
                                     <span className="text-xs font-bold text-[#c9a227] uppercase tracking-widest">Organisasi</span>
@@ -99,56 +61,80 @@ export default function StrukturPage() {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="bg-white p-6 md:p-10 rounded-3xl shadow-sm border border-slate-200 overflow-x-auto"
+                            className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 overflow-x-auto"
                         >
-                            {/* Scrollable container for mobile */}
-                            <div className="min-w-[900px]">
-                                {/* Level 1: Sekretaris Jenderal - Centered */}
-                                <div className="flex justify-center mb-0">
-                                    <div className="flex flex-col items-center">
-                                        <PejabatCard {...sekjenData} highlight={true} />
+                            <div className="org-chart">
+                                {/* Level 1: Sekretaris Jenderal */}
+                                <ul>
+                                    <li>
+                                        <OrgNode
+                                            name="Dr. Cris Kuntadi, S.E., M.M."
+                                            title="SEKRETARIS JENDERAL"
+                                            highlight={true}
+                                        />
 
-                                        {/* Vertical line down from Sekjen */}
-                                        <div className="w-0.5 h-8 bg-slate-300"></div>
-                                    </div>
-                                </div>
-
-                                {/* Main Horizontal line with branches */}
-                                <div className="relative flex justify-center">
-                                    {/* Main horizontal line spanning all kepalaˇbiro */}
-                                    <div className="absolute top-0 left-[10%] right-[10%] h-0.5 bg-slate-300"></div>
-
-                                    {/* Branch line to Direktur (right side) */}
-                                    <div className="absolute top-0 right-[15%] w-0.5 h-10 bg-slate-300"></div>
-                                </div>
-
-                                {/* Level 2: Direktur - Right Side */}
-                                <div className="flex justify-end pr-[12%] mt-10 mb-6">
-                                    <PejabatCard {...direkturData} />
-                                </div>
-
-                                {/* Vertical lines down to each Kepala Biro */}
-                                <div className="flex justify-between px-[10%] -mt-6">
-                                    {kepalaBiroData.map((_, index) => (
-                                        <div key={index} className="flex flex-col items-center" style={{ width: '140px' }}>
-                                            <div className="w-0.5 h-8 bg-slate-300"></div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {/* Level 3: Kepala Biro - Row */}
-                                <div className="flex justify-between px-[10%]">
-                                    {kepalaBiroData.map((pejabat, index) => (
-                                        <motion.div
-                                            key={index}
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: index * 0.1 }}
-                                        >
-                                            <PejabatCard {...pejabat} />
-                                        </motion.div>
-                                    ))}
-                                </div>
+                                        {/* Level 2: Children */}
+                                        <ul>
+                                            {/* Direktur - aligned right in original but we put in order */}
+                                            <li>
+                                                <OrgNode
+                                                    name="Yoki Yulizar, M.Sc."
+                                                    title="DIREKTUR"
+                                                    unit="Politeknik Ketenagakerjaan"
+                                                />
+                                            </li>
+                                            <li>
+                                                <OrgNode
+                                                    name="Dian Kreshnadjati, S.E, M.M."
+                                                    title="KEPALA BIRO"
+                                                    unit="Organisasi & SDM Aparatur"
+                                                />
+                                            </li>
+                                            <li>
+                                                <OrgNode
+                                                    name="Dr. Narsih, S.Pd., M.M."
+                                                    title="PLT KEPALA BIRO"
+                                                    unit="Keuangan & BMN"
+                                                />
+                                            </li>
+                                            <li>
+                                                <OrgNode
+                                                    name="Muhammad Arif Hidayat"
+                                                    title="KEPALA BIRO"
+                                                    unit="Kerjasama"
+                                                />
+                                            </li>
+                                            <li>
+                                                <OrgNode
+                                                    name="Dr. Narsih, S.Pd., M.M."
+                                                    title="KEPALA PUSAT"
+                                                    unit="Pengembangan SDM Naker"
+                                                />
+                                            </li>
+                                            <li>
+                                                <OrgNode
+                                                    name="Faried A. Nur Yuliono"
+                                                    title="KEPALA BIRO"
+                                                    unit="Humas"
+                                                />
+                                            </li>
+                                            <li>
+                                                <OrgNode
+                                                    name="Surya Lukita Warman"
+                                                    title="PLT KEPALA"
+                                                    unit="Pusat Pasar Kerja"
+                                                />
+                                            </li>
+                                            <li>
+                                                <OrgNode
+                                                    name="Reni Mursidayanti, S.H., M.H."
+                                                    title="KEPALA BIRO"
+                                                    unit="Hukum"
+                                                />
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
                         </motion.div>
                     </div>
@@ -156,6 +142,132 @@ export default function StrukturPage() {
             </main>
 
             <Footer />
+
+            <style jsx>{`
+                .org-chart {
+                    display: flex;
+                    justify-content: center;
+                    min-width: 1000px;
+                }
+                
+                .org-chart ul {
+                    padding-top: 20px;
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                }
+                
+                .org-chart li {
+                    list-style: none;
+                    text-align: center;
+                    position: relative;
+                    padding: 20px 5px 0;
+                }
+                
+                /* Top connector */
+                .org-chart li::before,
+                .org-chart li::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    border-top: 2px solid #cbd5e1;
+                    width: 50%;
+                }
+                
+                .org-chart li::before {
+                    right: 50%;
+                }
+                
+                .org-chart li::after {
+                    left: 50%;
+                }
+                
+                /* Remove left connector from first child */
+                .org-chart li:first-child::before {
+                    border: none;
+                }
+                
+                /* Remove right connector from last child */
+                .org-chart li:last-child::after {
+                    border: none;
+                }
+                
+                /* Only child - no horizontal line */
+                .org-chart li:only-child::before,
+                .org-chart li:only-child::after {
+                    border: none;
+                }
+                
+                /* Vertical line down from parent */
+                .org-chart ul ul::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    border-left: 2px solid #cbd5e1;
+                    height: 20px;
+                }
+                
+                /* Vertical line up from child */
+                .org-chart li::before {
+                    border-left: 2px solid #cbd5e1;
+                    height: 20px;
+                }
+                
+                .org-node {
+                    display: inline-block;
+                    padding: 10px 14px;
+                    border: 2px solid #e2e8f0;
+                    border-radius: 10px;
+                    background: white;
+                    text-align: center;
+                    min-width: 120px;
+                    max-width: 140px;
+                    transition: all 0.2s;
+                }
+                
+                .org-node:hover {
+                    border-color: #153e70;
+                    box-shadow: 0 4px 12px rgba(21, 62, 112, 0.15);
+                    transform: translateY(-2px);
+                }
+                
+                .org-node-highlight {
+                    background: linear-gradient(135deg, #153e70 0%, #2a5d9e 100%);
+                    border-color: #153e70;
+                }
+                
+                .org-node-highlight .org-name {
+                    color: white;
+                }
+                
+                .org-node-highlight .org-title {
+                    color: #c9a227;
+                }
+                
+                .org-name {
+                    font-weight: 700;
+                    font-size: 10px;
+                    color: #1e293b;
+                    line-height: 1.3;
+                    margin-bottom: 3px;
+                }
+                
+                .org-title {
+                    font-size: 8px;
+                    font-weight: 600;
+                    color: #c9a227;
+                    text-transform: uppercase;
+                    letter-spacing: 0.3px;
+                }
+                
+                .org-unit {
+                    font-size: 7px;
+                    color: #64748b;
+                    margin-top: 3px;
+                    line-height: 1.2;
+                }
+            `}</style>
         </div>
     );
 }
