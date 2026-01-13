@@ -1,35 +1,42 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Users } from 'lucide-react';
+import { ArrowLeft, Users, UserCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Tree, TreeNode } from 'react-organizational-chart';
 
-interface NodeProps {
-    name: string;
-    title: string;
-    unit?: string;
-    highlight?: boolean;
-}
+// Premium Card Component
+const OrgCard = ({ name, title, role, image, highlight = false }: { name: string; title: string; role?: string; image?: string; highlight?: boolean }) => (
+    <div className={`inline-flex flex-col items-center p-4 rounded-2xl border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group bg-white ${highlight
+            ? 'border-[#153e70] ring-4 ring-blue-50/50'
+            : 'border-slate-200 hover:border-blue-300'
+        }`} style={{ minWidth: '180px' }}>
 
-const OrgCard = ({ name, title, unit, highlight = false }: NodeProps) => (
-    <div className={`inline-block px-4 py-3 rounded-xl border-2 text-center transition-all hover:shadow-lg hover:-translate-y-1 ${highlight
-            ? 'bg-gradient-to-br from-[#153e70] to-[#2a5d9e] border-[#153e70] text-white'
-            : 'bg-white border-slate-300 hover:border-[#153e70]'
-        }`} style={{ minWidth: '130px', maxWidth: '150px' }}>
-        <div className={`font-bold text-[11px] leading-tight ${highlight ? 'text-white' : 'text-slate-800'}`}>
-            {name}
+        {/* Avatar */}
+        <div className={`w-14 h-14 rounded-full mb-3 flex items-center justify-center overflow-hidden border-2 ${highlight ? 'border-[#153e70] bg-blue-50' : 'border-slate-100 bg-slate-50'
+            }`}>
+            {image ? (
+                <img src={image} alt={name} className="w-full h-full object-cover" />
+            ) : (
+                <UserCircle2 className={`w-10 h-10 ${highlight ? 'text-[#153e70]' : 'text-slate-300'}`} />
+            )}
         </div>
-        <div className={`text-[9px] font-semibold uppercase mt-1 ${highlight ? 'text-[#c9a227]' : 'text-[#c9a227]'}`}>
-            {title}
-        </div>
-        {unit && (
-            <div className={`text-[8px] mt-1 leading-tight ${highlight ? 'text-white/70' : 'text-slate-500'}`}>
-                {unit}
+
+        {/* Info */}
+        <div className="text-center">
+            <h4 className={`font-bold text-sm mb-1 ${highlight ? 'text-[#153e70]' : 'text-slate-800'}`}>
+                {name}
+            </h4>
+            <div className={`text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full inline-block mb-1 ${highlight ? 'bg-[#153e70] text-white' : 'bg-slate-100 text-slate-500'
+                }`}>
+                {title}
             </div>
-        )}
+            {role && (
+                <p className="text-[10px] text-slate-500 font-medium">{role}</p>
+            )}
+        </div>
     </div>
 );
 
@@ -60,7 +67,7 @@ export default function StrukturPage() {
                                 </div>
                                 <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">Struktur Organisasi</h1>
                                 <p className="text-white/70 max-w-2xl mx-auto">
-                                    Susunan pejabat struktural Sekretariat Jenderal Kementerian Ketenagakerjaan Republik Indonesia
+                                    Struktur organisasi yang dirancang untuk efisiensi dan transparansi pengelolaan BMN
                                 </p>
                             </motion.div>
                         </div>
@@ -75,75 +82,86 @@ export default function StrukturPage() {
                             animate={{ opacity: 1 }}
                             className="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 overflow-x-auto"
                         >
-                            <div className="min-w-[1100px] py-4">
+                            <div className="min-w-[1000px] py-8">
                                 <Tree
                                     lineWidth="2px"
                                     lineColor="#cbd5e1"
-                                    lineBorderRadius="8px"
+                                    lineBorderRadius="12px"
                                     label={
                                         <OrgCard
-                                            name="Dr. Cris Kuntadi, S.E., M.M."
+                                            name="Pemimpin Tertinggi"
                                             title="Sekretaris Jenderal"
+                                            role="Pimpinan Unit Eselon I"
                                             highlight={true}
+                                            image="https://picsum.photos/seed/sekjen/200"
                                         />
                                     }
                                 >
+                                    {/* Level 2 Nodes */}
                                     <TreeNode label={
                                         <OrgCard
-                                            name="Yoki Yulizar, M.Sc."
-                                            title="Direktur"
-                                            unit="Politeknik Ketenagakerjaan"
-                                        />
-                                    } />
-                                    <TreeNode label={
-                                        <OrgCard
-                                            name="Dian Kreshnadjati, S.E, M.M."
+                                            name="Kepala Biro A"
                                             title="Kepala Biro"
-                                            unit="Organisasi & SDM Aparatur"
+                                            role="Biro Keuangan & BMN"
+                                            image="https://picsum.photos/seed/biro1/200"
                                         />
-                                    } />
+                                    }>
+                                        <TreeNode label={
+                                            <OrgCard
+                                                name="Koordinator A1"
+                                                title="Koordinator"
+                                                role="Bagian Anggaran"
+                                            />
+                                        } />
+                                        <TreeNode label={
+                                            <OrgCard
+                                                name="Koordinator A2"
+                                                title="Koordinator"
+                                                role="Bagian Perbendaharaan"
+                                            />
+                                        } />
+                                    </TreeNode>
+
                                     <TreeNode label={
                                         <OrgCard
-                                            name="Dr. Narsih, S.Pd., M.M."
-                                            title="Plt Kepala Biro"
-                                            unit="Keuangan & BMN"
-                                        />
-                                    } />
-                                    <TreeNode label={
-                                        <OrgCard
-                                            name="Muhammad Arif Hidayat"
+                                            name="Kepala Biro B"
                                             title="Kepala Biro"
-                                            unit="Kerjasama"
+                                            role="Biro Umum"
+                                            image="https://picsum.photos/seed/biro2/200"
                                         />
-                                    } />
+                                    }>
+                                        <TreeNode label={
+                                            <OrgCard
+                                                name="Koordinator B1"
+                                                title="Koordinator"
+                                                role="Bagian Rumah Tangga"
+                                            />
+                                        } />
+                                    </TreeNode>
+
                                     <TreeNode label={
                                         <OrgCard
-                                            name="Dr. Narsih, S.Pd., M.M."
+                                            name="Kepala Pusat C"
                                             title="Kepala Pusat"
-                                            unit="Pengembangan SDM Naker"
+                                            role="Pusat Data & Info"
+                                            image="https://picsum.photos/seed/kapus1/200"
                                         />
-                                    } />
-                                    <TreeNode label={
-                                        <OrgCard
-                                            name="Faried A. Nur Yuliono"
-                                            title="Kepala Biro"
-                                            unit="Humas"
-                                        />
-                                    } />
-                                    <TreeNode label={
-                                        <OrgCard
-                                            name="Surya Lukita Warman"
-                                            title="Plt Kepala"
-                                            unit="Pusat Pasar Kerja"
-                                        />
-                                    } />
-                                    <TreeNode label={
-                                        <OrgCard
-                                            name="Reni Mursidayanti, S.H., M.H."
-                                            title="Kepala Biro"
-                                            unit="Hukum"
-                                        />
-                                    } />
+                                    }>
+                                        <TreeNode label={
+                                            <OrgCard
+                                                name="Koordinator C1"
+                                                title="Koordinator"
+                                                role="Infrastruktur TIK"
+                                            />
+                                        } />
+                                        <TreeNode label={
+                                            <OrgCard
+                                                name="Koordinator C2"
+                                                title="Koordinator"
+                                                role="Aplikasi & Sistem"
+                                            />
+                                        } />
+                                    </TreeNode>
                                 </Tree>
                             </div>
                         </motion.div>
