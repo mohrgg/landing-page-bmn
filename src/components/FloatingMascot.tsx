@@ -52,7 +52,7 @@ export default function FloatingMascot() {
                                     <X className="w-3 h-3 text-slate-500" />
                                 </button>
                                 <p className="text-xs text-slate-600 leading-relaxed">
-                                    <span className="font-bold text-[#153e70]">Hai!</span> Saya <span className="font-semibold">BARAN</span>, maskot BMN Kemnaker. Selamat datang di Portal BMN! 🎉
+                                    <span className="font-bold text-[#153e70]">Hai!</span> Saya <span className="font-semibold">BARAN</span>, maskot BMN Kemnaker. Selamat datang pengguna aset negara! 🎉
                                 </p>
                                 {/* Arrow pointing to mascot */}
                                 <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white border-b border-r border-slate-200 rotate-45"></div>
