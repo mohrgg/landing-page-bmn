@@ -67,33 +67,57 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Navigation Desktop - Modern Pills or Clean Text */}
+          {/* Navigation Desktop - Kemenkeu Style */}
           <nav className="hidden lg:flex items-center bg-slate-50/50 rounded-full px-2 py-1 border border-slate-100">
-            {[
-              { id: 'hero', label: 'Beranda' },
-              { id: 'achievements', label: 'Pencapaian' },
-              { id: 'sebaran', label: 'Sebaran Aset' },
-              { id: 'performance', label: 'Kinerja' },
-              { id: 'analisis', label: 'Analisis' },
-              { id: 'info', label: 'Informasi' },
-            ].map((item) => (
-              <a
-                key={item.id}
-                onClick={(e) => scrollToSection(item.id, e)}
-                href={`#${item.id}`}
-                className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
-              >
-                {item.label}
-              </a>
-            ))}
+            {/* Beranda Dropdown */}
+            <div className="relative group">
+              <button className="flex items-center gap-1 px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all">
+                Beranda
+                <ChevronDown className="w-3 h-3" />
+              </button>
+              <div className="absolute top-full left-0 mt-3 w-48 bg-white border border-slate-100 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform origin-top-left">
+                {[
+                  { id: 'hero', label: 'Beranda' },
+                  { id: 'achievements', label: 'Pencapaian' },
+                  { id: 'sebaran', label: 'Sebaran Aset' },
+                  { id: 'performance', label: 'Kinerja' },
+                  { id: 'analisis', label: 'Analisis' },
+                  { id: 'info', label: 'Informasi' },
+                ].map((item) => (
+                  <a
+                    key={item.id}
+                    onClick={(e) => scrollToSection(item.id, e)}
+                    href={`#${item.id}`}
+                    className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Direct Page Links */}
+            <Link
+              href="/profil-satker"
+              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
+            >
+              Profil Satker
+            </Link>
+            <Link
+              href="/struktur"
+              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
+            >
+              Struktur
+            </Link>
 
             <div className="w-px h-4 bg-slate-200 mx-1"></div>
 
-            <button className="flex items-center gap-1 px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all group relative">
-              Layanan
-              <ChevronDown className="w-3 h-3" />
-
-              {/* Dropdown Menu - Floating */}
+            {/* Layanan Dropdown */}
+            <div className="relative group">
+              <button className="flex items-center gap-1 px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all">
+                Layanan
+                <ChevronDown className="w-3 h-3" />
+              </button>
               <div className="absolute top-full right-0 mt-3 w-56 bg-white border border-slate-100 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform origin-top-right">
                 <Link href="#" className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors mb-1">
                   Monitoring Tiket BMN
@@ -102,7 +126,7 @@ export default function Header() {
                   Monitoring PSP BMN
                 </Link>
               </div>
-            </button>
+            </div>
           </nav>
 
           {/* Action Buttons */}
@@ -131,8 +155,10 @@ export default function Header() {
         </div>
 
         {/* Mobile Navigation Drawer */}
-        <div className={`lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 shadow-xl transition-all duration-300 ease-in-out overflow-hidden ${isMobileMenuOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className={`lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 shadow-xl transition-all duration-300 ease-in-out overflow-hidden ${isMobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="flex flex-col p-4 space-y-2">
+            {/* Homepage Sections */}
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 pt-2">Beranda</div>
             {[
               { id: 'hero', label: 'Beranda' },
               { id: 'achievements', label: 'Pencapaian' },
@@ -148,11 +174,28 @@ export default function Header() {
                   scrollToSection(item.id, e);
                   setIsMobileMenuOpen(false);
                 }}
-                className="px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors border-b border-slate-50 last:border-0"
+                className="px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
               >
                 {item.label}
               </a>
             ))}
+
+            {/* Direct Page Links */}
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 pt-4 border-t border-slate-100 mt-2">Halaman</div>
+            <Link
+              href="/profil-satker"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
+            >
+              Profil Satker
+            </Link>
+            <Link
+              href="/struktur"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
+            >
+              Struktur Organisasi
+            </Link>
 
             <div className="grid grid-cols-2 gap-3 pt-3 mt-2 border-t border-slate-100">
               <button
