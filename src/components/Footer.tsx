@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Facebook, Twitter, Instagram, Youtube, Phone, Mail, MapPin, ExternalLink } from 'lucide-react';
 
 export default function Footer() {
@@ -73,6 +74,7 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm text-blue-100">
                             <li><a href="#" className="hover:text-white transition-colors">Regulasi BMN</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Standar Pelayanan</a></li>
+                            <li><Link href="/filosofi-maskot" className="hover:text-white transition-colors">Filosofi Maskot</Link></li>
                             <li><a href="#" className="hover:text-white transition-colors">Pengaduan Masyarakat</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Whistleblowing System</a></li>
                         </ul>

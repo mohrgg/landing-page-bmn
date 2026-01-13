@@ -85,15 +85,26 @@ export default function Header() {
                   { id: 'info', label: 'Informasi' },
                   { id: 'berita', label: 'Berita' },
                   { id: 'galeri', label: 'Galeri' },
+                  { id: 'filosofi-maskot', label: 'Filosofi Maskot', href: '/filosofi-maskot' },
                 ].map((item) => (
-                  <a
-                    key={item.id}
-                    onClick={(e) => scrollToSection(item.id, e)}
-                    href={`#${item.id}`}
-                    className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
-                  >
-                    {item.label}
-                  </a>
+                  item.href ? (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a
+                      key={item.id}
+                      onClick={(e) => scrollToSection(item.id, e)}
+                      href={`#${item.id}`}
+                      className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
+                    >
+                      {item.label}
+                    </a>
+                  )
                 ))}
               </div>
             </div>

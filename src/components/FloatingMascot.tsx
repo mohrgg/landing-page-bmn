@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MessageCircle } from 'lucide-react';
+import { X, MessageCircle, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function FloatingMascot() {
     const [isVisible, setIsVisible] = useState(false);
@@ -54,6 +55,11 @@ export default function FloatingMascot() {
                                 <p className="text-xs text-slate-600 leading-relaxed">
                                     <span className="font-bold text-[#153e70]">Hai!</span> Saya <span className="font-semibold">BARAN</span>, maskot BMN Kemnaker. Selamat datang pengguna aset negara! 🎉
                                 </p>
+                                <div className="mt-2 text-right">
+                                    <Link href="/filosofi-maskot" className="text-[10px] font-bold text-[#153e70] hover:underline flex items-center justify-end gap-1">
+                                        Kenalan Yuk! <ArrowRight className="w-3 h-3" />
+                                    </Link>
+                                </div>
                                 {/* Arrow pointing to mascot */}
                                 <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white border-b border-r border-slate-200 rotate-45"></div>
                             </motion.div>
