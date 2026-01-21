@@ -88,7 +88,7 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
+                    className="block px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -97,12 +97,6 @@ export default function Header() {
             </div>
 
             {/* Direct Page Links */}
-            <Link
-              href="/filosofi-maskot"
-              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
-            >
-              Filosofi Maskot
-            </Link>
             <Link
               href="/profil-satker"
               className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
@@ -115,6 +109,18 @@ export default function Header() {
             >
               Struktur
             </Link>
+            <Link
+              href="/berita"
+              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
+            >
+              Berita
+            </Link>
+            <Link
+              href="/filosofi-maskot"
+              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
+            >
+              Filosofi Maskot
+            </Link>
 
             <div className="w-px h-4 bg-slate-200 mx-1"></div>
 
@@ -125,10 +131,10 @@ export default function Header() {
                 <ChevronDown className="w-3 h-3" />
               </button>
               <div className="absolute top-full right-0 mt-3 w-56 bg-white border border-slate-100 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform origin-top-right">
-                <Link href="#" className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors mb-1">
+                <Link href="#" className="block px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors mb-1">
                   Monitoring Tiket BMN
                 </Link>
-                <Link href="#" className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
+                <Link href="#" className="block px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
                   Monitoring PSP BMN
                 </Link>
               </div>
@@ -187,13 +193,6 @@ export default function Header() {
             {/* Direct Page Links */}
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 pt-4 border-t border-slate-100 mt-2">Halaman</div>
             <Link
-              href="/filosofi-maskot"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
-            >
-              Filosofi Maskot
-            </Link>
-            <Link
               href="/profil-satker"
               onClick={() => setIsMobileMenuOpen(false)}
               className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
@@ -206,6 +205,20 @@ export default function Header() {
               className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
             >
               Struktur Organisasi
+            </Link>
+            <Link
+              href="/berita"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
+            >
+              Semua Berita
+            </Link>
+            <Link
+              href="/filosofi-maskot"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
+            >
+              Filosofi Maskot
             </Link>
 
             <div className="grid grid-cols-2 gap-3 pt-3 mt-2 border-t border-slate-100">

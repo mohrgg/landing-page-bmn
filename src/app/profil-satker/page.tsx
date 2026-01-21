@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, MapPin, Phone, Mail, Building2, Users, FileBarChart, Trophy, ExternalLink, Camera } from 'lucide-react';
-import Link from 'next/link';
+import { MapPin, Phone, Mail, Building2, Users, FileBarChart, Trophy, ExternalLink, Camera } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { RevealOnScroll } from '@/components/ui/RevealOnScroll';
+import BackButton from '@/components/ui/BackButton';
 
 const statsData = [
     { label: 'Total Aset BMN', value: 'Rp 1.2 T', icon: FileBarChart, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
@@ -37,12 +37,7 @@ export default function ProfilSatkerPage() {
 
                     <div className="container-custom relative z-10">
                         {/* Breadcrumb */}
-                        <div className="pt-8 pb-4">
-                            <Link href="/" className="inline-flex items-center text-white/70 hover:text-white transition-colors text-sm">
-                                <ArrowLeft className="w-4 h-4 mr-2" />
-                                Kembali ke Beranda
-                            </Link>
-                        </div>
+                        <BackButton />
 
                         {/* Profile Card */}
                         <div className="pb-12 pt-4">

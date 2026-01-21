@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Users } from 'lucide-react';
-import Link from 'next/link';
+import { Users } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BackButton from '@/components/ui/BackButton';
 
 // Dynamically import OrgChart with SSR disabled to prevent 'document is not defined' error
 const OrgChart = dynamic(() => import('@/components/OrgChart'), { ssr: false });
@@ -23,12 +23,7 @@ export default function StrukturPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 
                     <div className="container-custom relative z-10">
-                        <div className="pt-8 pb-4">
-                            <Link href="/" className="inline-flex items-center text-white/70 hover:text-white transition-colors text-sm">
-                                <ArrowLeft className="w-4 h-4 mr-2" />
-                                Kembali ke Beranda
-                            </Link>
-                        </div>
+                        <BackButton />
 
                         <div className="pb-12 pt-4 text-center">
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

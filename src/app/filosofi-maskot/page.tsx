@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, Glasses, Laptop, Backpack, GraduationCap, Eye, ShieldCheck, Footprints } from 'lucide-react';
-import Link from 'next/link';
+import { Glasses, Laptop, Backpack, GraduationCap, Eye, ShieldCheck, Footprints } from 'lucide-react';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import BackButton from '@/components/ui/BackButton';
 import { useState } from 'react';
 
 // Data Filosofi Maskot
@@ -63,30 +63,32 @@ export default function FilosofiMaskotPage() {
 
             <main className="pt-20">
                 {/* Hero / Intro Section */}
-                <section className="relative bg-[#153e70] py-20 overflow-hidden">
+                <section className="relative bg-gradient-to-br from-[#153e70] via-[#1e4a82] to-[#2a5d9e] overflow-hidden">
                     <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern.png')]"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 
-                    <div className="container-custom relative z-10 text-center">
-                        <Link href="/" className="inline-flex items-center text-white/70 hover:text-white mb-8 transition-colors">
-                            <ArrowLeft className="w-4 h-4 mr-2" />
-                            Kembali ke Beranda
-                        </Link>
+                    <div className="container-custom relative z-10">
+                        {/* Back Button */}
+                        <BackButton />
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="max-w-3xl mx-auto"
-                        >
-                            <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-[#c9a227] font-bold text-sm mb-4 border border-white/20">
-                                MASKOT BMN KEMNAKER
-                            </span>
-                            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                                Filosofi Sang Penjaga Aset
-                            </h1>
-                            <p className="text-white/80 text-lg leading-relaxed">
-                                Memperkenalkan maskot yang merepresentasikan semangat penjagaan, profesionalisme, dan transformasi digital dalam pengelolaan Barang Milik Negara.
-                            </p>
-                        </motion.div>
+                        {/* Centered Content */}
+                        <div className="pb-12 pt-4 text-center">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="max-w-3xl mx-auto"
+                            >
+                                <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-[#c9a227] font-bold text-sm mb-4 border border-white/20">
+                                    MASKOT BMN KEMNAKER
+                                </span>
+                                <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                                    Filosofi Sang Penjaga Aset
+                                </h1>
+                                <p className="text-white/80 text-lg leading-relaxed">
+                                    Memperkenalkan maskot yang merepresentasikan semangat penjagaan, profesionalisme, dan transformasi digital dalam pengelolaan Barang Milik Negara.
+                                </p>
+                            </motion.div>
+                        </div>
                     </div>
                 </section>
 
