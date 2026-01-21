@@ -77,39 +77,32 @@ export default function Header() {
               </button>
               <div className="absolute top-full left-0 mt-3 w-48 bg-white border border-slate-100 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform origin-top-left">
                 {[
-                  { id: 'hero', label: 'Beranda' },
-                  { id: 'achievements', label: 'Pencapaian' },
-                  { id: 'sebaran', label: 'Sebaran Aset' },
-                  { id: 'performance', label: 'Kinerja' },
-                  { id: 'analisis', label: 'Analisis' },
-                  { id: 'info', label: 'Informasi' },
-                  { id: 'berita', label: 'Berita' },
-                  { id: 'galeri', label: 'Galeri' },
-                  { id: 'filosofi-maskot', label: 'Filosofi Maskot', href: '/filosofi-maskot' },
+                  { label: 'Beranda', href: '/' },
+                  { label: 'Pencapaian', href: '/#achievements' },
+                  { label: 'Sebaran Aset', href: '/#sebaran' },
+                  { label: 'Kinerja', href: '/#performance' },
+                  { label: 'Analisis', href: '/#analisis' },
+                  { label: 'Berita', href: '/#berita' },
+                  { label: 'Galeri', href: '/#galeri' },
                 ].map((item) => (
-                  item.href ? (
-                    <Link
-                      key={item.id}
-                      href={item.href}
-                      className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <a
-                      key={item.id}
-                      onClick={(e) => scrollToSection(item.id, e)}
-                      href={`#${item.id}`}
-                      className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  )
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="block px-3 py-2.5 text-xs font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
+                  >
+                    {item.label}
+                  </Link>
                 ))}
               </div>
             </div>
 
             {/* Direct Page Links */}
+            <Link
+              href="/filosofi-maskot"
+              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
+            >
+              Filosofi Maskot
+            </Link>
             <Link
               href="/profil-satker"
               className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
@@ -173,30 +166,33 @@ export default function Header() {
             {/* Homepage Sections */}
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 pt-2">Beranda</div>
             {[
-              { id: 'hero', label: 'Beranda' },
-              { id: 'achievements', label: 'Pencapaian' },
-              { id: 'sebaran', label: 'Sebaran Aset' },
-              { id: 'performance', label: 'Kinerja' },
-              { id: 'analisis', label: 'Analisis' },
-              { id: 'info', label: 'Informasi' },
-              { id: 'berita', label: 'Berita' },
-              { id: 'galeri', label: 'Galeri' },
+              { label: 'Beranda', href: '/' },
+              { label: 'Pencapaian', href: '/#achievements' },
+              { label: 'Sebaran Aset', href: '/#sebaran' },
+              { label: 'Kinerja', href: '/#performance' },
+              { label: 'Analisis', href: '/#analisis' },
+              { label: 'Berita', href: '/#berita' },
+              { label: 'Galeri', href: '/#galeri' },
             ].map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={(e) => {
-                  scrollToSection(item.id, e);
-                  setIsMobileMenuOpen(false);
-                }}
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
                 className="px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
 
             {/* Direct Page Links */}
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 pt-4 border-t border-slate-100 mt-2">Halaman</div>
+            <Link
+              href="/filosofi-maskot"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#153e70] rounded-lg transition-colors"
+            >
+              Filosofi Maskot
+            </Link>
             <Link
               href="/profil-satker"
               onClick={() => setIsMobileMenuOpen(false)}

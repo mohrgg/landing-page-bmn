@@ -56,7 +56,7 @@ export default function NewsSection() {
     const regularNews = newsData.filter(n => !n.featured);
 
     return (
-        <section id="berita" className="py-20 bg-slate-50">
+        <section id="berita" className="py-20 bg-white">
             <div className="container-custom">
                 <RevealOnScroll>
                     {/* Header */}

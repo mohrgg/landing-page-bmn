@@ -60,6 +60,13 @@ export default function HeroSection() {
                             </span>
                         </motion.h1>
 
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-lg md:text-xl font-semibold text-[#c9a227] italic tracking-wide"
+                        >
+                            "Cerdas Mengelola, Tangguh Menjaga"
+                        </motion.p>
+
                         <motion.div
                             variants={itemVariants}
                             className="w-20 h-1.5 bg-[#c9a227] rounded-full"

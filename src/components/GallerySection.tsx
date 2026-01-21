@@ -48,7 +48,7 @@ export default function GallerySection() {
     };
 
     return (
-        <section id="galeri" className="py-20 bg-white">
+        <section id="galeri" className="py-20 bg-slate-50">
             <div className="container-custom">
                 <RevealOnScroll>
                     {/* Header */}

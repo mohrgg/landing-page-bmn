@@ -4,7 +4,6 @@ import AchievementsSection from '@/components/AchievementsSection';
 import DashboardMapSection from '@/components/IndonesiaMap';
 import PerformanceSection from '@/components/PerformanceSection';
 import EfficiencySection from '@/components/EfficiencySection';
-import InfoSection from '@/components/InfoSection';
 import NewsSection from '@/components/NewsSection';
 import GallerySection from '@/components/GallerySection';
 import Footer from '@/components/Footer';
@@ -19,7 +18,6 @@ export default function Home() {
       <DashboardMapSection />
       <PerformanceSection />
       <EfficiencySection />
-      <InfoSection />
       <NewsSection />
       <GallerySection />
       <Footer />

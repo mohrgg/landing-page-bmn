@@ -69,7 +69,7 @@ const RadialProgress = ({ value, label, sublabel, icon: Icon, colorClass = "text
 
 export default function PerformanceSection() {
     return (
-        <section id="performance" className="section-padding bg-white border-t border-slate-100">
+        <section id="performance" className="section-padding bg-slate-50 border-t border-slate-100">
             <div className="container-custom">
                 <RevealOnScroll>
                     {/* Top Row: Indicators */}
