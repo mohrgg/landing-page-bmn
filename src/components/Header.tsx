@@ -121,24 +121,6 @@ export default function Header() {
             >
               Filosofi Maskot
             </Link>
-
-            <div className="w-px h-4 bg-slate-200 mx-1"></div>
-
-            {/* Layanan Dropdown */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all">
-                Layanan
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              <div className="absolute top-full right-0 mt-3 w-56 bg-white border border-slate-100 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform origin-top-right">
-                <Link href="#" className="block px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors mb-1">
-                  Monitoring Tiket BMN
-                </Link>
-                <Link href="#" className="block px-3 py-2.5 text-xs font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors">
-                  Monitoring PSP BMN
-                </Link>
-              </div>
-            </div>
           </nav>
 
           {/* Action Buttons */}

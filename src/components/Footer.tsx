@@ -68,15 +68,11 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 3: Layanan Pubik */}
+                    {/* Column 3: Layanan Publik */}
                     <div className="col-span-1">
                         <h4 className="font-bold text-[#c9a227] mb-4 uppercase text-xs tracking-wider">Layanan Publik</h4>
                         <ul className="space-y-3 text-sm text-blue-100">
-                            <li><a href="#" className="hover:text-white transition-colors">Regulasi BMN</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Standar Pelayanan</a></li>
                             <li><Link href="/filosofi-maskot" className="hover:text-white transition-colors">Filosofi Maskot</Link></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Pengaduan Masyarakat</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Whistleblowing System</a></li>
                         </ul>
                     </div>
 
