@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Menu, ChevronDown, Grid, LogOut } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -14,6 +15,7 @@ interface UserData {
 }
 
 export default function Header() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,6 +26,8 @@ export default function Header() {
     setUser(null);
     document.cookie = 'sso_token=; path=/; domain=.bmn.local; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     setShowLogoutConfirm(false);
+    router.push('/');
+    router.refresh();
   };
 
   useEffect(() => {
