@@ -31,6 +31,33 @@ export default function Header() {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
+
+    // Check for existing SSO session
+    const checkSession = () => {
+      const cookies = document.cookie.split(';');
+      const ssoCookie = cookies.find(c => c.trim().startsWith('sso_token='));
+
+      if (ssoCookie) {
+        try {
+          const token = ssoCookie.split('=')[1];
+          // Decode JWT payload (part 2)
+          const payload = JSON.parse(atob(token.split('.')[1]));
+
+          if (payload && payload.username) {
+            setUser({
+              username: payload.username,
+              role: payload.role,
+              name: payload.name
+            });
+          }
+        } catch (e) {
+          console.error("Failed to restore session:", e);
+        }
+      }
+    };
+
+    checkSession();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

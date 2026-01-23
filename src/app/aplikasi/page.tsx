@@ -63,41 +63,16 @@ const applications: AppItem[] = [
 
 export default function AplikasiPage() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 animate-[fadeIn_500ms_ease-out]">
-            {/* Header */}
-            <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
-                <div className="max-w-5xl mx-auto px-6 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <Link
-                                href="/"
-                                className="flex items-center gap-2 text-slate-600 hover:text-[#153e70] transition-colors"
-                            >
-                                <ArrowLeft className="w-5 h-5" />
-                                <span className="text-sm font-medium">Kembali</span>
-                            </Link>
-                            <div className="h-6 w-px bg-slate-200"></div>
-                            <div className="flex items-center gap-3">
-                                <div className="relative w-8 h-8">
-                                    <Image
-                                        src="/images/logo-kemnaker.png"
-                                        alt="Logo"
-                                        fill
-                                        className="object-contain"
-                                    />
-                                </div>
-                                <div>
-                                    <h1 className="text-sm font-bold text-[#153e70]">Portal Aplikasi BMN</h1>
-                                    <p className="text-[10px] text-slate-500">Kementerian Ketenagakerjaan RI</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 animate-[fadeIn_500ms_ease-out] pt-24">
             {/* Main Content */}
             <main className="max-w-5xl mx-auto px-6 py-12">
+                <div className="flex items-center gap-2 mb-8 text-slate-500 hover:text-[#153e70] transition-colors w-fit">
+                    <Link href="/" className="flex items-center gap-2">
+                        <ArrowLeft className="w-5 h-5" />
+                        <span className="text-sm font-medium">Kembali ke Beranda</span>
+                    </Link>
+                </div>
+
                 <div className="text-center mb-10 animate-[scaleIn_500ms_ease-out]">
                     <div className="w-16 h-16 bg-blue-100 rounded-2xl mx-auto mb-4 flex items-center justify-center text-[#153e70]">
                         <Grid className="w-8 h-8" />
