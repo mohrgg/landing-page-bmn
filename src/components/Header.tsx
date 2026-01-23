@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Menu, ChevronDown, Grid, LogOut } from 'lucide-react';
+import { Menu, ChevronDown, Grid, LogOut, LogIn } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import LoginModal from './LoginModal';
@@ -169,7 +169,7 @@ export default function Header() {
           </nav>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-3 min-w-[140px] justify-end">
+          <div className="flex items-center gap-3">
             {user ? (
               <>
                 {/* Aplikasi Button - Now on the left */}
@@ -187,7 +187,7 @@ export default function Header() {
                       {user.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-xs font-bold text-[#153e70] leading-tight max-w-[100px] truncate">{user.name}</span>
+                      <span className="text-xs font-bold text-[#153e70] leading-tight">{user.name}</span>
                       <span className="text-[10px] text-slate-500 leading-tight">{user.role}</span>
                     </div>
                   </div>
@@ -205,7 +205,7 @@ export default function Header() {
                 onClick={() => setIsLoginOpen(true)}
                 className="hidden md:flex items-center gap-2 bg-[#153e70] text-white px-6 py-2.5 rounded-full text-xs font-bold shadow-sm hover:shadow-md hover:bg-blue-800 transition-all transform hover:-translate-y-0.5"
               >
-                <LogOut className="w-3.5 h-3.5 rotate-180" />
+                <LogIn className="w-4 h-4" />
                 <span>Masuk Portal</span>
               </button>
             )}
