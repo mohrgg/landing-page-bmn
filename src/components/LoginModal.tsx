@@ -2,26 +2,68 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, User, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { X, User, Lock, ArrowRight, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onLoginSuccess?: (user: { username: string; role: string; name: string }) => void;
 }
 
-export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginModalProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
         setIsLoading(true);
-        // Simulate login delay
-        setTimeout(() => {
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                setSuccess(true);
+                // Callback dengan data user
+                if (onLoginSuccess) {
+                    onLoginSuccess(data.user);
+                }
+                // Tutup modal setelah delay
+                setTimeout(() => {
+                    setSuccess(false);
+                    setUsername('');
+                    setPassword('');
+                    onClose();
+                }, 1500);
+            } else {
+                setError(data.message || 'Login gagal');
+            }
+        } catch {
+            setError('Terjadi kesalahan. Silakan coba lagi.');
+        } finally {
             setIsLoading(false);
-            onClose(); // Close on "success"
-        }, 1500);
+        }
+    };
+
+    const handleClose = () => {
+        setError('');
+        setSuccess(false);
+        setUsername('');
+        setPassword('');
+        onClose();
     };
 
     return (
@@ -33,7 +75,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] transition-all"
                     />
 
@@ -51,7 +93,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
                             {/* Close Button */}
                             <button
-                                onClick={onClose}
+                                onClick={handleClose}
                                 className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
                             >
                                 <X className="w-5 h-5" />
@@ -84,8 +126,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                             </div>
                                             <input
                                                 type="text"
+                                                value={username}
+                                                onChange={(e) => setUsername(e.target.value)}
                                                 className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-100 focus:border-blue-600 outline-none transition-all placeholder:text-slate-300"
                                                 placeholder="Masukkan NIP atau Username"
+                                                disabled={isLoading || success}
                                                 required
                                             />
                                         </div>
@@ -106,8 +151,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                             </div>
                                             <input
                                                 type={showPassword ? "text" : "password"}
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
                                                 className="block w-full pl-10 pr-10 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-100 focus:border-blue-600 outline-none transition-all placeholder:text-slate-300"
                                                 placeholder="••••••••"
+                                                disabled={isLoading || success}
                                                 required
                                             />
                                             <button
@@ -120,13 +168,41 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                         </div>
                                     </div>
 
+                                    {/* Error Message */}
+                                    {error && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-sm"
+                                        >
+                                            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                                            {error}
+                                        </motion.div>
+                                    )}
+
+                                    {/* Success Message */}
+                                    {success && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-xl text-green-600 text-sm"
+                                        >
+                                            <CheckCircle className="w-4 h-4 flex-shrink-0" />
+                                            Login berhasil! Mengalihkan...
+                                        </motion.div>
+                                    )}
+
                                     <button
                                         type="submit"
-                                        disabled={isLoading}
+                                        disabled={isLoading || success || !username || !password}
                                         className="w-full flex items-center justify-center gap-2 bg-[#153e70] hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition-all shadow-md hover:shadow-lg transform active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed mt-2"
                                     >
                                         {isLoading ? (
                                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                        ) : success ? (
+                                            <>
+                                                <CheckCircle className="w-4 h-4" /> Berhasil!
+                                            </>
                                         ) : (
                                             <>
                                                 Masuk Portal <ArrowRight className="w-4 h-4" />
@@ -135,8 +211,23 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                     </button>
                                 </form>
 
+                                {/* Demo Credentials */}
+                                <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center mb-2">🔐 Demo Credentials</p>
+                                    <div className="grid grid-cols-2 gap-2 text-xs">
+                                        <div className="text-center p-2 bg-white rounded-lg">
+                                            <p className="text-slate-400 text-[10px]">SATKER</p>
+                                            <p className="text-slate-600 font-mono font-bold">satker01 / 123</p>
+                                        </div>
+                                        <div className="text-center p-2 bg-white rounded-lg">
+                                            <p className="text-slate-400 text-[10px]">ADMIN</p>
+                                            <p className="text-slate-600 font-mono font-bold">admin / 123</p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {/* Footer Helper */}
-                                <div className="mt-8 text-center">
+                                <div className="mt-6 text-center">
                                     <p className="text-xs text-slate-400">
                                         Butuh bantuan akses? <a href="#" className="text-blue-600 font-bold hover:underline">Hubungi Admin</a>
                                     </p>

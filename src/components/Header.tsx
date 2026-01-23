@@ -2,15 +2,29 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, ChevronDown, Grid } from 'lucide-react';
+import { Menu, ChevronDown, Grid, LogOut } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import LoginModal from './LoginModal';
+
+interface UserData {
+  username: string;
+  role: string;
+  name: string;
+}
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<UserData | null>(null);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const handleLogout = () => {
+    setUser(null);
+    document.cookie = 'sso_token=; path=/; domain=.bmn.local; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    setShowLogoutConfirm(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,17 +139,44 @@ export default function Header() {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsLoginOpen(true)}
-              className="hidden md:block text-xs font-bold text-[#153e70] hover:text-blue-600 px-3 py-2 transition-colors"
-            >
-              Masuk
-            </button>
-
-            <button className="hidden sm:flex items-center gap-2 bg-[#153e70] text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-md hover:shadow-lg hover:bg-blue-800 transition-all transform hover:-translate-y-0.5">
-              <Grid className="w-3.5 h-3.5" />
-              <span>Aplikasi</span>
-            </button>
+            {user ? (
+              <>
+                {/* Aplikasi Button - Now on the left */}
+                <Link
+                  href="http://monitoring.bmn.local:3001"
+                  className="hidden sm:flex items-center gap-2 bg-[#153e70] text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-md hover:shadow-lg hover:bg-blue-800 transition-all transform hover:-translate-y-0.5"
+                >
+                  <Grid className="w-3.5 h-3.5" />
+                  <span>Aplikasi</span>
+                </Link>
+                {/* User Info - Cleaner Pill Style */}
+                <div className="hidden md:flex items-center gap-3 bg-slate-50 rounded-full pl-3 pr-1 py-1 border border-slate-200">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#153e70] to-blue-600 flex items-center justify-center text-white text-xs font-bold">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-[#153e70] leading-tight">{user.name}</span>
+                      <span className="text-[10px] text-slate-500 leading-tight">{user.role}</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowLogoutConfirm(true)}
+                    className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                    title="Keluar"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <button
+                onClick={() => setIsLoginOpen(true)}
+                className="hidden md:block text-xs font-bold text-[#153e70] hover:text-blue-600 px-3 py-2 transition-colors"
+              >
+                Masuk
+              </button>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -204,25 +245,85 @@ export default function Header() {
             </Link>
 
             <div className="grid grid-cols-2 gap-3 pt-3 mt-2 border-t border-slate-100">
-              <button
-                onClick={() => {
-                  setIsLoginOpen(true);
-                  setIsMobileMenuOpen(false);
-                }}
-                className="text-center py-2.5 text-sm font-bold text-[#153e70] bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
-              >
-                Masuk
-              </button>
-              <button className="flex items-center justify-center gap-2 bg-[#153e70] text-white py-2.5 rounded-lg text-sm font-bold shadow-sm hover:bg-blue-800 transition-colors">
-                <Grid className="w-4 h-4" />
-                <span>Aplikasi</span>
-              </button>
+              {user ? (
+                <>
+                  <button
+                    onClick={() => {
+                      setShowLogoutConfirm(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="flex items-center justify-center gap-2 py-2.5 text-sm font-bold text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Keluar
+                  </button>
+                  <Link
+                    href="http://monitoring.bmn.local:3001"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 bg-[#153e70] text-white py-2.5 rounded-lg text-sm font-bold shadow-sm hover:bg-blue-800 transition-colors"
+                  >
+                    <Grid className="w-4 h-4" />
+                    <span>Aplikasi</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      setIsLoginOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="col-span-2 text-center py-2.5 text-sm font-bold text-[#153e70] bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+                  >
+                    Masuk
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
       </header>
 
-      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <>
+          <div
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60]"
+            onClick={() => setShowLogoutConfirm(false)}
+          />
+          <div className="fixed inset-0 flex items-center justify-center z-[70] p-4 pointer-events-none">
+            <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm pointer-events-auto animate-in zoom-in-95 duration-200">
+              <div className="text-center mb-5">
+                <div className="w-14 h-14 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
+                  <LogOut className="w-7 h-7 text-red-600" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800">Konfirmasi Keluar</h3>
+                <p className="text-sm text-slate-500 mt-1">Apakah Anda yakin ingin keluar dari sistem?</p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowLogoutConfirm(false)}
+                  className="flex-1 py-2.5 text-sm font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+                >
+                  Batal
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex-1 py-2.5 text-sm font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors"
+                >
+                  Ya, Keluar
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onLoginSuccess={(userData) => setUser(userData)}
+      />
     </>
   );
 }
