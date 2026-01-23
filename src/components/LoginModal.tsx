@@ -36,15 +36,18 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
 
             if (data.success) {
                 setSuccess(true);
+                // Call success callback immediately
                 if (onLoginSuccess) {
                     onLoginSuccess(data.user);
                 }
+
+                // Close modal after short delay for visual feedback
                 setTimeout(() => {
                     setSuccess(false);
                     setUsername('');
                     setPassword('');
                     onClose();
-                }, 1000);
+                }, 500);
             } else {
                 setError(data.message || 'Login gagal');
             }

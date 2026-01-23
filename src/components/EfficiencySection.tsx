@@ -78,7 +78,7 @@ export default function EfficiencySection() {
                                     3 Indikator (Belanja Modal, Penambahan Aset, dan Pengurangan Aset)
                                 </p>
                                 <div className="h-[300px]">
-                                    <ResponsiveContainer width="100%" height="100%">
+                                    <ResponsiveContainer width="100%" height="100%" minHeight={300}>
                                         <BarChart data={modalData} barGap={0} barCategoryGap="20%">
                                             <CartesianGrid strokeDasharray="3 3" vertical={false} />
                                             <XAxis dataKey="kategori" tick={{ fontSize: 12 }} />
@@ -150,7 +150,7 @@ export default function EfficiencySection() {
                                         Total PNBP Selama Tahun 2021, 2022, 2023
                                     </p>
                                     <div className="h-[200px]">
-                                        <ResponsiveContainer width="100%" height="100%">
+                                        <ResponsiveContainer width="100%" height="100%" minHeight={200}>
                                             <BarChart data={pnbpYearData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                                                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                                                 <XAxis dataKey="tahun" />

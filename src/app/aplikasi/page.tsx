@@ -1,16 +1,21 @@
 'use client';
 
+import { useState } from 'react';
 import {
     BarChart3,
     FileSpreadsheet,
     Package,
     ClipboardCheck,
-    ArrowLeft,
     ExternalLink,
-    Grid
+    Grid,
+    Lock
 } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
+import LoginModal from '@/components/LoginModal';
+import { useAuth } from '@/hooks/useAuth';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import BackButton from '@/components/ui/BackButton';
+import { motion } from 'framer-motion';
 
 interface AppItem {
     id: string;
@@ -52,7 +57,7 @@ const applications: AppItem[] = [
     },
     {
         id: 'wasdal',
-        name: 'Wasdal BMN',
+        name: 'Monitoring BMN',
         description: 'Pengawasan dan pengendalian Barang Milik Negara',
         url: 'http://wasdal.bmn.local:3004',
         icon: <ClipboardCheck className="w-8 h-8" />,
@@ -62,63 +67,109 @@ const applications: AppItem[] = [
 ];
 
 export default function AplikasiPage() {
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const { user, refreshAuth } = useAuth();
+    const isLoggedIn = !!user;
+
+    const handleAppClick = (e: React.MouseEvent, url: string) => {
+        e.preventDefault();
+
+        if (!isLoggedIn) {
+            setIsLoginModalOpen(true);
+        } else {
+            window.open(url, '_blank');
+        }
+    };
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 animate-[fadeIn_500ms_ease-out] pt-24">
-            {/* Main Content */}
-            <main className="max-w-5xl mx-auto px-6 py-12">
-                <div className="flex items-center gap-2 mb-8 text-slate-500 hover:text-[#153e70] transition-colors w-fit">
-                    <Link href="/" className="flex items-center gap-2">
-                        <ArrowLeft className="w-5 h-5" />
-                        <span className="text-sm font-medium">Kembali ke Beranda</span>
-                    </Link>
-                </div>
+        <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
+            <Header />
 
-                <div className="text-center mb-10 animate-[scaleIn_500ms_ease-out]">
-                    <div className="w-16 h-16 bg-blue-100 rounded-2xl mx-auto mb-4 flex items-center justify-center text-[#153e70]">
-                        <Grid className="w-8 h-8" />
+            <main className="pt-20">
+                {/* Hero Section */}
+                <section className="bg-gradient-to-br from-[#153e70] via-[#1e4a82] to-[#2a5d9e] relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern.svg')]"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+
+                    <div className="container-custom relative z-10">
+                        <BackButton />
+
+                        <div className="pb-12 pt-4 text-center">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                            >
+                                <div className="flex items-center justify-center gap-2 mb-3">
+                                    <Grid className="w-5 h-5 text-[#c9a227]" />
+                                    <span className="text-xs font-bold text-[#c9a227] uppercase tracking-widest">Aplikasi BMN</span>
+                                </div>
+                                <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">Pilih Aplikasi</h1>
+                                <p className="text-white/70 max-w-xl mx-auto">
+                                    Akses aplikasi pengelolaan Barang Milik Negara
+                                </p>
+                            </motion.div>
+                        </div>
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-800 mb-2">Pilih Aplikasi</h2>
-                    <p className="text-slate-500">Akses aplikasi pengelolaan Barang Milik Negara</p>
-                </div>
+                </section>
 
-                {/* App Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {applications.map((app, index) => (
-                        <a
-                            key={app.id}
-                            href={app.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`group p-6 rounded-2xl border-2 transition-all duration-300 ${app.bgColor} animate-[scaleIn_500ms_ease-out_both]`}
-                            style={{ animationDelay: `${index * 100}ms` }}
-                        >
-                            <div className="flex items-start gap-4">
-                                <div className={`p-3 rounded-xl bg-white shadow-sm ${app.color}`}>
-                                    {app.icon}
-                                </div>
-                                <div className="flex-1">
-                                    <div className="flex items-center justify-between mb-2">
-                                        <h3 className="font-bold text-slate-800 group-hover:text-slate-900">
-                                            {app.name}
-                                        </h3>
-                                        <ExternalLink className="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                {/* Applications Grid */}
+                <section className="py-12">
+                    <div className="container-custom">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                            {applications.map((app, index) => (
+                                <motion.div
+                                    key={app.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    onClick={(e) => handleAppClick(e, app.url)}
+                                    className={`group p-6 rounded-2xl border-2 transition-all duration-300 ${app.bgColor} cursor-pointer shadow-sm hover:shadow-lg`}
+                                >
+                                    <div className="flex items-start gap-4">
+                                        <div className={`p-3 rounded-xl bg-white shadow-sm ${app.color}`}>
+                                            {app.icon}
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <h3 className="font-bold text-slate-800 group-hover:text-slate-900">
+                                                    {app.name}
+                                                </h3>
+                                                {isLoggedIn ? (
+                                                    <ExternalLink className="w-4 h-4 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                ) : (
+                                                    <Lock className="w-4 h-4 text-slate-400 opacity-70" />
+                                                )}
+                                            </div>
+                                            <p className="text-sm text-slate-600 leading-relaxed">
+                                                {app.description}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <p className="text-sm text-slate-600 leading-relaxed">
-                                        {app.description}
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    ))}
-                </div>
+                                </motion.div>
+                            ))}
+                        </div>
 
-                {/* Info Footer */}
-                <div className="mt-12 text-center">
-                    <p className="text-xs text-slate-400">
-                        Pastikan Anda sudah login melalui Portal BMN untuk mengakses aplikasi
-                    </p>
-                </div>
+                        {/* Info Footer */}
+                        <div className="mt-12 text-center">
+                            <p className="text-xs text-slate-400">
+                                Pastikan Anda sudah login melalui Portal BMN untuk mengakses aplikasi
+                            </p>
+                        </div>
+                    </div>
+                </section>
             </main>
+
+            <Footer />
+
+            {/* Login Modal Integration */}
+            <LoginModal
+                isOpen={isLoginModalOpen}
+                onClose={() => setIsLoginModalOpen(false)}
+                onLoginSuccess={() => {
+                    refreshAuth();
+                    setIsLoginModalOpen(false);
+                }}
+            />
         </div>
     );
 }

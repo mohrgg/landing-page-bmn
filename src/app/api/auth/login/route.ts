@@ -32,12 +32,17 @@ export async function POST(request: NextRequest) {
             name: user.name,
         });
 
+        // Determine cookie domain based on request host
+        const host = request.headers.get('host') || '';
+        const isLocalhost = host.includes('localhost');
+        const cookieDomain = isLocalhost ? undefined : (process.env.SSO_COOKIE_DOMAIN || '.bmn.local');
+
         // Set cookie dengan konfigurasi SSO
         const cookieStore = await cookies();
         cookieStore.set('sso_token', token, {
-            domain: '.bmn.local', // PENTING: Titik di depan agar terbaca di subdomain
+            domain: cookieDomain,
             path: '/',
-            httpOnly: true,
+            httpOnly: false, // Changed to false so client JS can read it for UI state
             secure: false, // false untuk development
             sameSite: 'lax',
             maxAge: 60 * 60 * 24, // 24 jam

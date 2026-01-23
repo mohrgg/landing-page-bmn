@@ -19,7 +19,7 @@ export default function StrukturPage() {
             <main className="pt-20">
                 {/* Hero Section */}
                 <section className="bg-gradient-to-br from-[#153e70] via-[#1e4a82] to-[#2a5d9e] relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern.png')]"></div>
+                    <div className="absolute inset-0 opacity-10 bg-[url('/images/pattern.svg')]"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 
                     <div className="container-custom relative z-10">

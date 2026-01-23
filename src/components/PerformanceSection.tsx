@@ -118,7 +118,7 @@ export default function PerformanceSection() {
                             </h3>
                             <div className="flex-1 flex flex-col sm:flex-row items-center gap-8 justify-center">
                                 <div className="h-40 w-40 relative flex-shrink-0">
-                                    <ResponsiveContainer width="100%" height="100%">
+                                    <ResponsiveContainer width="100%" height="100%" minHeight={160}>
                                         <PieChart>
                                             <Pie
                                                 data={homeData}
@@ -158,7 +158,7 @@ export default function PerformanceSection() {
                             </h3>
                             <div className="flex-1 flex flex-col sm:flex-row items-center gap-8 justify-center">
                                 <div className="h-40 w-40 relative flex-shrink-0">
-                                    <ResponsiveContainer width="100%" height="100%">
+                                    <ResponsiveContainer width="100%" height="100%" minHeight={160}>
                                         <PieChart>
                                             <Pie
                                                 data={vehicleData}

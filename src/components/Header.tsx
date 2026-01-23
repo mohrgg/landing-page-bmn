@@ -2,29 +2,22 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Menu, ChevronDown, Grid, LogOut, LogIn } from 'lucide-react';
-import { useEffect, useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import { Menu, LogIn, ChevronDown, LogOut, Grid } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 import LoginModal from './LoginModal';
-
-interface UserData {
-  username: string;
-  role: string;
-  name: string;
-}
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Header() {
-  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<UserData | null>(null);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const router = useRouter();
+  const { user, refreshAuth, logout } = useAuth();
 
   const handleLogout = () => {
-    setUser(null);
-    document.cookie = 'sso_token=; path=/; domain=.bmn.local; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    logout();
     setShowLogoutConfirm(false);
     router.push('/');
     router.refresh();
@@ -35,50 +28,29 @@ export default function Header() {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
-
-    // Check for existing SSO session
-    const checkSession = () => {
-      const cookies = document.cookie.split(';');
-      const ssoCookie = cookies.find(c => c.trim().startsWith('sso_token='));
-
-      if (ssoCookie) {
-        try {
-          const token = ssoCookie.split('=')[1];
-          // Decode JWT payload (part 2)
-          const payload = JSON.parse(atob(token.split('.')[1]));
-
-          if (payload && payload.username) {
-            setUser({
-              username: payload.username,
-              role: payload.role,
-              name: payload.name
-            });
-          }
-        } catch (e) {
-          console.error("Failed to restore session:", e);
-        }
-      }
-    };
-
-    checkSession();
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+  const navLinks = [
+    { name: 'Beranda', href: '/' },
+    { name: 'Profil Satker', href: '/profil-satker' },
+    { name: 'Struktur', href: '/struktur' },
+    { name: 'Berita', href: '/berita' },
+    { name: 'Filosofi Maskot', href: '/filosofi-maskot' },
+  ];
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
+  const homePageSections = [
+    { label: 'Beranda', href: '/' },
+    { label: 'Pencapaian', href: '/#achievements' },
+    { label: 'Sebaran Aset', href: '/#sebaran' },
+    { label: 'Kinerja', href: '/#performance' },
+    { label: 'Analisis', href: '/#analisis' },
+    { label: 'Berita', href: '/#berita' },
+    { label: 'Galeri', href: '/#galeri' },
+  ];
+
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   return (
     <>
@@ -121,15 +93,7 @@ export default function Header() {
                 <ChevronDown className="w-3 h-3" />
               </button>
               <div className="absolute top-full left-0 mt-3 w-48 bg-white border border-slate-100 rounded-xl shadow-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform origin-top-left">
-                {[
-                  { label: 'Beranda', href: '/' },
-                  { label: 'Pencapaian', href: '/#achievements' },
-                  { label: 'Sebaran Aset', href: '/#sebaran' },
-                  { label: 'Kinerja', href: '/#performance' },
-                  { label: 'Analisis', href: '/#analisis' },
-                  { label: 'Berita', href: '/#berita' },
-                  { label: 'Galeri', href: '/#galeri' },
-                ].map((item) => (
+                {homePageSections.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -142,44 +106,30 @@ export default function Header() {
             </div>
 
             {/* Direct Page Links */}
-            <Link
-              href="/profil-satker"
-              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
-            >
-              Profil Satker
-            </Link>
-            <Link
-              href="/struktur"
-              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
-            >
-              Struktur
-            </Link>
-            <Link
-              href="/berita"
-              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
-            >
-              Berita
-            </Link>
-            <Link
-              href="/filosofi-maskot"
-              className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
-            >
-              Filosofi Maskot
-            </Link>
+            {navLinks.slice(1).map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="px-4 py-2 text-xs font-bold text-slate-600 hover:text-[#153e70] hover:bg-white hover:shadow-sm rounded-full transition-all"
+              >
+                {link.name}
+              </Link>
+            ))}
           </nav>
 
           {/* Action Buttons */}
           <div className="flex items-center gap-3">
+            {/* Aplikasi Button - Always visible for discoverability */}
+            <Link
+              href="/aplikasi"
+              className="hidden sm:flex items-center gap-2 bg-[#153e70] text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-md hover:shadow-lg hover:bg-blue-800 transition-all transform hover:-translate-y-0.5"
+            >
+              <Grid className="w-3.5 h-3.5" />
+              <span>Aplikasi</span>
+            </Link>
+
             {user ? (
               <>
-                {/* Aplikasi Button - Now on the left */}
-                <Link
-                  href="/aplikasi"
-                  className="hidden sm:flex items-center gap-2 bg-[#153e70] text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-md hover:shadow-lg hover:bg-blue-800 transition-all transform hover:-translate-y-0.5"
-                >
-                  <Grid className="w-3.5 h-3.5" />
-                  <span>Aplikasi</span>
-                </Link>
                 {/* User Info - Cleaner Pill Style */}
                 <div className="hidden md:flex items-center gap-3 bg-slate-50 rounded-full pl-3 pr-1 py-1 border border-slate-200">
                   <div className="flex items-center gap-2">
@@ -226,15 +176,7 @@ export default function Header() {
           <div className="flex flex-col p-4 space-y-2">
             {/* Homepage Sections */}
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-4 pt-2">Beranda</div>
-            {[
-              { label: 'Beranda', href: '/' },
-              { label: 'Pencapaian', href: '/#achievements' },
-              { label: 'Sebaran Aset', href: '/#sebaran' },
-              { label: 'Kinerja', href: '/#performance' },
-              { label: 'Analisis', href: '/#analisis' },
-              { label: 'Berita', href: '/#berita' },
-              { label: 'Galeri', href: '/#galeri' },
-            ].map((item) => (
+            {homePageSections.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -354,7 +296,10 @@ export default function Header() {
       <LoginModal
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}
-        onLoginSuccess={(userData) => setUser(userData)}
+        onLoginSuccess={(userData) => {
+          refreshAuth();
+          setIsLoginOpen(false);
+        }}
       />
     </>
   );
