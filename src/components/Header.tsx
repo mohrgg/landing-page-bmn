@@ -143,8 +143,7 @@ export default function Header() {
               <>
                 {/* Aplikasi Button - Now on the left */}
                 <Link
-                  href="http://monitoring.bmn.local:3001"
-                  target="_blank"
+                  href="/aplikasi"
                   className="hidden sm:flex items-center gap-2 bg-[#153e70] text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-md hover:shadow-lg hover:bg-blue-800 transition-all transform hover:-translate-y-0.5"
                 >
                   <Grid className="w-3.5 h-3.5" />
