@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify, type JWTPayload } from 'jose';
 
-// JWT Secret dari environment variable
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-change-me';
+// JWT Secret dari environment variable - HARUS SAMA dengan Tabulasi Data BMN
+const JWT_SECRET = process.env.JWT_SECRET || 'bmn-kemnaker-sso-secret-key-2026';
 
 // Encode secret untuk jose
 const getSecretKey = () => new TextEncoder().encode(JWT_SECRET);
@@ -67,7 +67,7 @@ export function authenticateUser(username: string, password: string) {
   const user = MOCK_USERS.find(
     (u) => u.username === username && u.password === password
   );
-  
+
   if (!user) {
     return null;
   }

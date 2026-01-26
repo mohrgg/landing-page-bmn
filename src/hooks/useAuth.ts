@@ -12,31 +12,24 @@ export function useAuth() {
     const [user, setUser] = useState<UserData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const checkSession = () => {
+    const checkSession = async () => {
         try {
-            const cookies = document.cookie.split(';');
-            const ssoCookie = cookies.find(c => c.trim().startsWith('sso_token='));
-
-            if (ssoCookie) {
-                const token = ssoCookie.split('=')[1];
-                // Simple base64 decode for client-side display 
-                // Security verification still happens on server/middleware side
-                const payloadPart = token.split('.')[1];
-                if (payloadPart) {
-                    const payload = JSON.parse(atob(payloadPart));
-                    if (payload && payload.username) {
-                        setUser({
-                            username: payload.username,
-                            role: payload.role,
-                            name: payload.name
-                        });
-                    }
+            // Fetch session from server (secure HttpOnly cookie check)
+            const res = await fetch('/api/auth/me', {
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
                 }
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setUser(data.user);
             } else {
                 setUser(null);
             }
         } catch (e) {
-            console.error("Failed to restore session:", e);
+            console.error("Failed to check session:", e);
             setUser(null);
         } finally {
             setIsLoading(false);
@@ -68,13 +61,8 @@ export function useAuth() {
     };
 
     const logout = () => {
-        // Clear for .bmn.local
-        document.cookie = 'sso_token=; path=/; domain=.bmn.local; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-        // Clear for current domain (localhost)
-        document.cookie = 'sso_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-
-        setUser(null);
-        refreshAuth();
+        // Hard navigate to logout API to specifically clear HttpOnly cookies on server
+        window.location.href = '/api/auth/logout';
     };
 
     return { user, isLoading, refreshAuth, logout };

@@ -299,6 +299,8 @@ export default function Header() {
         onLoginSuccess={(userData) => {
           refreshAuth();
           setIsLoginOpen(false);
+          router.refresh();
+          router.push('/aplikasi');
         }}
       />
     </>

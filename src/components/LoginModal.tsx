@@ -33,6 +33,7 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
             });
 
             const data = await response.json();
+            console.log('Server Auth Response:', data);
 
             if (data.success) {
                 setSuccess(true);
@@ -204,11 +205,11 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
                             <div className="grid grid-cols-2 gap-2 text-xs">
                                 <div className="text-center p-2 bg-white rounded-lg">
                                     <p className="text-slate-400 text-[10px]">SATKER</p>
-                                    <p className="text-slate-600 font-mono font-bold">satker01 / 123</p>
+                                    <p className="text-slate-600 font-mono font-bold">satker01 / 123456</p>
                                 </div>
                                 <div className="text-center p-2 bg-white rounded-lg">
                                     <p className="text-slate-400 text-[10px]">ADMIN</p>
-                                    <p className="text-slate-600 font-mono font-bold">admin / 123</p>
+                                    <p className="text-slate-600 font-mono font-bold">admin / admin123</p>
                                 </div>
                             </div>
                         </div>

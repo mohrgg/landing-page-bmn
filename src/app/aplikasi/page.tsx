@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
     BarChart3,
     FileSpreadsheet,
@@ -67,6 +68,7 @@ const applications: AppItem[] = [
 ];
 
 export default function AplikasiPage() {
+    const router = useRouter();
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const { user, refreshAuth } = useAuth();
     const isLoggedIn = !!user;
@@ -149,6 +151,35 @@ export default function AplikasiPage() {
                             ))}
                         </div>
 
+                        {/* Admin Management Card - Bottom Center & Only visible to INTERNAL role */}
+                        {user && user.role === 'INTERNAL' && (
+                            <div className="mt-8 flex justify-center">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    onClick={() => window.open('/admin', '_blank')}
+                                    className="group p-6 rounded-2xl border-2 border-slate-800 bg-slate-900 cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-lg"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className="p-3 rounded-xl bg-slate-800 text-yellow-400 shadow-sm flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /><path d="m9 12 2 2 4-4" /></svg>
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="flex items-center justify-between mb-1">
+                                                <h3 className="font-bold text-lg text-white group-hover:text-yellow-400 transition-colors">
+                                                    Manajemen Akun
+                                                </h3>
+                                                <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+                                            </div>
+                                            <p className="text-sm text-slate-400">
+                                                Akses Dashboard Administrator
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </div>
+                        )}
+
                         {/* Info Footer */}
                         <div className="mt-12 text-center">
                             <p className="text-xs text-slate-400">
@@ -168,6 +199,7 @@ export default function AplikasiPage() {
                 onLoginSuccess={() => {
                     refreshAuth();
                     setIsLoginModalOpen(false);
+                    router.refresh();
                 }}
             />
         </div>
