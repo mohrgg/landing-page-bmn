@@ -169,10 +169,10 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 User Info
                             </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Role
                             </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Satker
                             </th>
                             <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -204,12 +204,12 @@ export default function UserManagement({ initialUsers }: UserManagementProps) {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
+                                        <td className="px-6 py-4 whitespace-nowrap text-center">
                                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.role === 'INTERNAL' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}`}>
                                                 {user.role}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                                             {user.satkerId || '-'}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center">
