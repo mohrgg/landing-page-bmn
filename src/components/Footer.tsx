@@ -62,7 +62,7 @@ export default function Footer() {
                             <li>
                                 <Link href="/aplikasi" className="hover:text-white transition-colors flex items-center gap-2 group">
                                     <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
-                                    <span>Monitoring BMN (Wasdal)</span>
+                                    <span>Monitoring BMN</span>
                                 </Link>
                             </li>
                         </ul>
