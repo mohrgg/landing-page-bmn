@@ -42,28 +42,28 @@ export default function Footer() {
                         <h4 className="font-bold text-[#c9a227] mb-4 uppercase text-xs tracking-wider">Aplikasi Terkait</h4>
                         <ul className="space-y-3 text-sm text-blue-100">
                             <li>
-                                <a href="#" className="hover:text-white transition-colors flex items-center gap-2 group">
+                                <Link href="/aplikasi" className="hover:text-white transition-colors flex items-center gap-2 group">
                                     <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
-                                    <span>Monitoring Tiket BMN</span>
-                                </a>
+                                    <span>Tabulasi Data BMN</span>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="hover:text-white transition-colors flex items-center gap-2 group">
+                                <Link href="/aplikasi" className="hover:text-white transition-colors flex items-center gap-2 group">
                                     <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
                                     <span>Monitoring PSP BMN</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="hover:text-white transition-colors flex items-center gap-2 group">
+                                <Link href="/aplikasi" className="hover:text-white transition-colors flex items-center gap-2 group">
                                     <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
-                                    <span>SIMAN Kemenkeu</span>
-                                </a>
+                                    <span>Inventarisasi BMN</span>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className="hover:text-white transition-colors flex items-center gap-2 group">
+                                <Link href="/aplikasi" className="hover:text-white transition-colors flex items-center gap-2 group">
                                     <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
-                                    <span>Srikandi</span>
-                                </a>
+                                    <span>Monitoring BMN (Wasdal)</span>
+                                </Link>
                             </li>
                         </ul>
                     </div>
