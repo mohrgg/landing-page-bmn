@@ -17,10 +17,12 @@ export default function Header() {
   const { user, refreshAuth, logout } = useAuth();
 
   const handleLogout = () => {
+    console.log('🚪 [HEADER] handleLogout START');
     logout();
     setShowLogoutConfirm(false);
     router.push('/');
     router.refresh();
+    console.log('✅ [HEADER] handleLogout DONE');
   };
 
   useEffect(() => {
@@ -297,10 +299,17 @@ export default function Header() {
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}
         onLoginSuccess={(userData) => {
+          console.log('📞 [HEADER] ========== LOGIN SUCCESS CALLBACK ==========');
+          console.log('📊 [HEADER] User data:', JSON.stringify(userData, null, 2));
+          console.log('📞 [HEADER] Calling refreshAuth()...');
           refreshAuth();
+          console.log('📞 [HEADER] Calling setIsLoginOpen(false)...');
           setIsLoginOpen(false);
+          console.log('📞 [HEADER] Calling router.refresh()...');
           router.refresh();
+          console.log('📞 [HEADER] Calling router.push("/aplikasi")...');
           router.push('/aplikasi');
+          console.log('✅ [HEADER] ========== CALLBACK DONE ==========');
         }}
       />
     </>

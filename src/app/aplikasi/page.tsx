@@ -73,13 +73,32 @@ export default function AplikasiPage() {
     const { user, refreshAuth } = useAuth();
     const isLoggedIn = !!user;
 
+    const getAppUrl = (originalUrl: string) => {
+        if (typeof window === 'undefined') return originalUrl;
+        const hostname = window.location.hostname;
+
+        // Jika akses dari localhost, ubah domain .bmn.local menjadi localhost
+        if (hostname.includes('localhost') || hostname === '127.0.0.1') {
+            try {
+                const urlObj = new URL(originalUrl);
+                // Ganti hostname: tabulasi.bmn.local -> localhost
+                // Port tetap sama (3001, 3002, dll)
+                return `${urlObj.protocol}//localhost:${urlObj.port}`;
+            } catch (e) {
+                return originalUrl;
+            }
+        }
+        return originalUrl;
+    };
+
     const handleAppClick = (e: React.MouseEvent, url: string) => {
         e.preventDefault();
 
         if (!isLoggedIn) {
             setIsLoginModalOpen(true);
         } else {
-            window.open(url, '_blank');
+            const targetUrl = getAppUrl(url);
+            window.open(targetUrl, '_blank');
         }
     };
 

@@ -23,7 +23,13 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
         setError('');
         setIsLoading(true);
 
+        console.log('🔐 [LOGIN] ========== SUBMITTING LOGIN ==========');
+        console.log('🔐 [LOGIN] Username:', username);
+        console.log('🔐 [LOGIN] Password:', password ? '***' : 'empty');
+
         try {
+            console.log('📡 [LOGIN] Sending POST request to /api/auth/login...');
+
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -32,29 +38,57 @@ export default function LoginModal({ isOpen, onClose, onLoginSuccess }: LoginMod
                 body: JSON.stringify({ username, password }),
             });
 
+            console.log('📡 [LOGIN] Response received:', response.status, response.statusText);
+
             const data = await response.json();
-            console.log('Server Auth Response:', data);
+            console.log('📊 [LOGIN] Server Response:', JSON.stringify(data, null, 2));
 
             if (data.success) {
+                console.log('✅ [LOGIN] ========== LOGIN SUCCESS ==========');
+                console.log('✅ [LOGIN] User data:', JSON.stringify(data.user, null, 2));
+                console.log('✅ [LOGIN] Setting success state to TRUE...');
                 setSuccess(true);
-                // Call success callback immediately
-                if (onLoginSuccess) {
-                    onLoginSuccess(data.user);
-                }
 
-                // Close modal after short delay for visual feedback
+                // Close modal FIRST to stop re-renders
+                console.log('⏳ [LOGIN] Waiting 500ms before closing modal...');
                 setTimeout(() => {
+                    console.log('🚪 [LOGIN] Closing modal...');
                     setSuccess(false);
                     setUsername('');
                     setPassword('');
+                    console.log('🚫 [LOGIN] Calling onClose()...');
                     onClose();
                 }, 500);
+
+                // Call success callback AFTER modal closed
+                console.log('⏳ [LOGIN] Waiting 600ms before calling onLoginSuccess...');
+                setTimeout(() => {
+                    console.log('📞 [LOGIN] ========== CALLING CALLBACK ==========');
+                    if (onLoginSuccess) {
+                        console.log('✅ [LOGIN] onLoginSuccess callback EXISTS');
+                        console.log('✅ [LOGIN] Calling onLoginSuccess with user:', JSON.stringify(data.user, null, 2));
+                        try {
+                            onLoginSuccess(data.user);
+                            console.log('✅ [LOGIN] onLoginSuccess callback COMPLETED');
+                        } catch (err) {
+                            console.error('❌ [LOGIN] ERROR in onLoginSuccess callback:', err);
+                        }
+                    } else {
+                        console.error('❌ [LOGIN] onLoginSuccess callback is NULL!');
+                    }
+                    console.log('🔔 [LOGIN] ========== CALLBACK DONE ==========');
+                }, 600);
             } else {
+                console.log('❌ [LOGIN] ========== LOGIN FAILED ==========');
+                console.log('❌ [LOGIN] Error message:', data.message);
                 setError(data.message || 'Login gagal');
             }
-        } catch {
+        } catch (err) {
+            console.error('❌ [LOGIN] ========== REQUEST ERROR ==========');
+            console.error('❌ [LOGIN] Error:', err);
             setError('Terjadi kesalahan. Silakan coba lagi.');
         } finally {
+            console.log('⏹ [LOGIN] ========== SUBMIT DONE ==========');
             setIsLoading(false);
         }
     };

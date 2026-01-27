@@ -54,19 +54,32 @@ export async function POST(request: NextRequest) {
         // Jika environment production/simulasi domain (.bmn.local), gunakan .bmn.local
         // Kita cek host header
         const host = request.headers.get('host') || '';
+        const protocol = request.headers.get('x-forwarded-proto') || 'http';
+        const isHttps = protocol === 'https';
+
         const isLocalDomain = host.includes('.bmn.local');
-        const domain = isLocalDomain ? '.bmn.local' : undefined;
+        const isLocalhost = host.includes('localhost');
 
-        cookieStore.set('sso_token', token, {
-            httpOnly: true, // Secure cookie
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            path: '/',
-            maxAge: 24 * 60 * 60, // 24 hours
-            domain: domain
-        });
+        // Debug log
+        console.log('[LOGIN_DEBUG] Host:', host);
+        console.log('[LOGIN_DEBUG] Protocol:', protocol);
+        console.log('[LOGIN_DEBUG] Is HTTPS:', isHttps);
+        console.log('[LOGIN_DEBUG] Is Local Domain (.bmn.local):', isLocalDomain);
+        console.log('[LOGIN_DEBUG] Is Localhost:', isLocalhost);
 
-        return NextResponse.json({
+        // Domain logic:
+        // - localhost: domain = undefined
+        // - .bmn.local: domain = .bmn.local
+        let domain: string | undefined = undefined;
+        if (isLocalDomain) {
+            domain = '.bmn.local';
+        }
+
+        console.log('[LOGIN_DEBUG] Cookie domain set to:', domain || 'undefined (local)');
+        console.log('[LOGIN_DEBUG] Token length:', token.length);
+        console.log('[LOGIN_DEBUG] Setting cookie...');
+
+        const response = NextResponse.json({
             success: true,
             user: {
                 username: user.nip,
@@ -74,6 +87,27 @@ export async function POST(request: NextRequest) {
                 role: user.role
             }
         });
+
+        // Explicitly clear any existing cookie first to avoid conflicts
+        response.cookies.delete('sso_token');
+
+        // Set cookie di response (lebih pasti)
+        response.cookies.set('sso_token', token, {
+            httpOnly: true,
+            secure: isHttps,       // Only secure if actually HTTPS
+            sameSite: 'lax',       // Allows redirect navigation
+            path: '/',             // Root path
+            maxAge: 24 * 60 * 60,  // 24 Hours
+            domain: domain         // .bmn.local or undefined
+        });
+
+        console.log(`[LOGIN_DEBUG] Cookie set with: Secure=${isHttps}, Domain=${domain}, SameSite=lax`);
+
+        console.log('[LOGIN_DEBUG] Cookie set successfully, returning response');
+
+        return response;
+
+
 
     } catch (error) {
         console.error('Login error:', error);
