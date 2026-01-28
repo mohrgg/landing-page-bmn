@@ -11,9 +11,14 @@ export default async function AdminPage() {
         orderBy: { createdAt: 'desc' }
     });
 
+    const logs = await prisma.activityLog.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 100 // Limit to last 100 logs
+    });
+
     return (
-        <main className="min-h-screen bg-[#f8fafc] pt-28 pb-10">
-            <div className="container-custom">
+        <main className="min-h-screen pt-8 pb-10">
+            <div className="px-8">
 
                 {/* Header Page */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -29,7 +34,7 @@ export default async function AdminPage() {
                 </div>
 
                 {/* Client Component for Interactive Table */}
-                <UserManagement initialUsers={users} />
+                <UserManagement initialUsers={users} logs={logs} />
 
             </div>
         </main>

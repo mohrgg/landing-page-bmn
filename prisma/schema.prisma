@@ -34,3 +34,12 @@ enum Role {
   INTERNAL
   SATKER
 }
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  action    String   // CREATE, UPDATE, DELETE, RESET_PASSWORD
+  details   String   @db.Text
+  target    String?  // e.g. "User: John Doe"
+  actorName String   // Admin who performed the action
+  createdAt DateTime @default(now())
+}

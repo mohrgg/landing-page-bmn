@@ -53,6 +53,9 @@ export default function Header() {
 
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  const isAdminPage = pathname?.startsWith('/admin');
+
+  if (isAdminPage) return null;
 
   return (
     <>

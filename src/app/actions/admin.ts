@@ -4,6 +4,28 @@ import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { Role } from '@prisma/client';
+import { cookies } from 'next/headers';
+import { verifyToken } from '@/lib/auth';
+
+// Helper for Logging
+async function logActivity(action: string, details: string, target?: string) {
+    try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get('sso_token')?.value;
+        const payload = token ? await verifyToken(token) : null;
+
+        await prisma.activityLog.create({
+            data: {
+                action,
+                details,
+                actorName: payload?.name || 'Unknown Admin',
+                target
+            }
+        });
+    } catch (e) {
+        console.error("Failed to log activity:", e);
+    }
+}
 
 export async function createUser(formData: FormData) {
     const nip = formData.get('nip') as string;
@@ -41,6 +63,8 @@ export async function createUser(formData: FormData) {
             }
         });
 
+        await logActivity('CREATE_USER', `Created user ${name} (${role})`, nip);
+
         revalidatePath('/admin');
         return { success: true, message: 'User berhasil dibuat' };
     } catch (error: any) {
@@ -70,7 +94,7 @@ export async function updateUser(id: string, formData: FormData) {
             });
         }
 
-        await prisma.user.update({
+        const user = await prisma.user.update({
             where: { id },
             data: {
                 name,
@@ -78,6 +102,9 @@ export async function updateUser(id: string, formData: FormData) {
                 satkerId: role === 'SATKER' ? satkerCode : null
             }
         });
+
+        await logActivity('UPDATE_USER', `Updated user ${user.name} to Role ${role}`, user.nip);
+
         revalidatePath('/admin');
         return { success: true, message: 'User berhasil diupdate' };
     } catch (error) {
@@ -88,10 +115,13 @@ export async function updateUser(id: string, formData: FormData) {
 
 export async function toggleUserStatus(id: string, currentStatus: boolean) {
     try {
-        await prisma.user.update({
+        const user = await prisma.user.update({
             where: { id },
             data: { isActive: !currentStatus }
         });
+
+        await logActivity('TOGGLE_STATUS', `Changed status to ${!currentStatus ? 'Active' : 'Inactive'}`, user.nip);
+
         revalidatePath('/admin');
         return { success: true, message: 'Status user diubah' };
     } catch (error) {
@@ -102,10 +132,13 @@ export async function toggleUserStatus(id: string, currentStatus: boolean) {
 export async function resetPassword(id: string) {
     try {
         const hashedPassword = await bcrypt.hash('bmn2026', 10);
-        await prisma.user.update({
+        const user = await prisma.user.update({
             where: { id },
             data: { password: hashedPassword }
         });
+
+        await logActivity('RESET_PASSWORD', `Reset password to default`, user.nip);
+
         revalidatePath('/admin');
         return { success: true, message: 'Password direset ke bmn2026' };
     } catch (error) {
@@ -115,9 +148,12 @@ export async function resetPassword(id: string) {
 
 export async function deleteUser(id: string) {
     try {
-        await prisma.user.delete({
+        const user = await prisma.user.delete({
             where: { id }
         });
+
+        await logActivity('DELETE_USER', `Deleted user ${user.name}`, user.nip);
+
         revalidatePath('/admin');
         return { success: true, message: 'User berhasil dihapus' };
     } catch (error) {
