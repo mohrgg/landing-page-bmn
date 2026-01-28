@@ -26,6 +26,7 @@ interface AppItem {
     icon: React.ReactNode;
     color: string;
     bgColor: string;
+    requiredRole?: 'INTERNAL' | 'SATKER';
 }
 
 const applications: AppItem[] = [
@@ -42,10 +43,11 @@ const applications: AppItem[] = [
         id: 'monitoring',
         name: 'Monitoring PSP BMN',
         description: 'Pantau status PSP dan progress per wilayah secara real-time',
-        url: 'http://monitoring.bmn.local:3002',
+        url: 'http://monitoring.bmn.local:3003',
         icon: <BarChart3 className="w-8 h-8" />,
         color: 'text-green-600',
         bgColor: 'bg-green-50 hover:bg-green-100 border-green-200',
+        requiredRole: 'INTERNAL',
     },
     {
         id: 'inventarisasi',
@@ -137,7 +139,10 @@ export default function AplikasiPage() {
                 <section className="py-12">
                     <div className="container-custom">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                            {applications.map((app, index) => (
+                            {applications.filter(app => {
+                                if (!app.requiredRole) return true;
+                                return user && user.role === app.requiredRole;
+                            }).map((app, index) => (
                                 <motion.div
                                     key={app.id}
                                     initial={{ opacity: 0, y: 20 }}

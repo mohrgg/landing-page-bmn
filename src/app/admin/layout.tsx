@@ -11,7 +11,7 @@ export default function AdminLayout({
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     return (
-        <div className="bg-[#f8fafc] min-h-screen">
+        <div className="bg-slate-100 min-h-screen">
             <AdminSidebar
                 isCollapsed={isCollapsed}
                 onToggle={() => setIsCollapsed(!isCollapsed)}

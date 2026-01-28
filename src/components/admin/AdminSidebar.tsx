@@ -7,24 +7,40 @@ import {
     ChevronRight,
     User,
     Grid,
-    Shield,
+    Users,
+    ClipboardList,
     LogOut
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
-import { useAuth } from '@/hooks/useAuth';
-import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/useAuth";
 
 interface AdminSidebarProps {
     isCollapsed: boolean;
     onToggle: () => void;
 }
 
+const menuItems = [
+    {
+        title: "Manajemen User",
+        href: "/admin",
+        icon: Users,
+        description: "Kelola User & Role"
+    },
+    {
+        title: "Log Aktivitas",
+        href: "/admin/logs",
+        icon: ClipboardList,
+        description: "Riwayat Audit"
+    }
+];
+
 export default function AdminSidebar({ isCollapsed, onToggle }: AdminSidebarProps) {
     const pathname = usePathname();
     const { user, logout } = useAuth();
 
-    // Portal URL logic
+    // Helper for Portal URL - same logic as Tabulasi but adapted
     const getPortalUrl = () => {
         if (typeof window !== 'undefined') {
             return `${window.location.origin}/aplikasi`;
@@ -50,11 +66,11 @@ export default function AdminSidebar({ isCollapsed, onToggle }: AdminSidebarProp
                     <Link
                         href="/"
                         className="flex items-center gap-2 group cursor-pointer"
-                        title="Kembali ke Beranda"
+                        title="Kembali ke Beranda Portal"
                     >
                         <div className="relative h-9 w-9 overflow-hidden rounded-lg shadow-md group-hover:scale-105 transition-transform">
                             <Image
-                                src="/images/logo-kemnaker-tulisan.png"
+                                src="/images/logo-kemnaker.png"
                                 alt="Logo"
                                 fill
                                 className="object-contain"
@@ -73,13 +89,13 @@ export default function AdminSidebar({ isCollapsed, onToggle }: AdminSidebarProp
                     <Link
                         href="/"
                         className="mx-auto relative h-9 w-9 overflow-hidden rounded-lg shadow-md hover:scale-105 transition-transform cursor-pointer block"
-                        title="Kembali ke Beranda"
+                        title="Kembali ke Beranda Portal"
                     >
                         <Image
                             src="/images/logo-kemnaker.png"
                             alt="Logo"
                             fill
-                            className="object-contain" // Changed to contain to fit box
+                            className="object-contain"
                         />
                     </Link>
                 )}
@@ -100,39 +116,62 @@ export default function AdminSidebar({ isCollapsed, onToggle }: AdminSidebarProp
             {/* Navigation */}
             <nav className="mt-4 px-2">
                 <ul className="space-y-0.5">
-                    <li>
-                        <div
-                            className={cn(
-                                "group relative flex items-center gap-2 rounded-lg px-2 py-2 transition-all duration-200 bg-gradient-to-r from-blue-600 to-indigo-600 shadow-md",
-                                isCollapsed && "justify-center"
-                            )}
-                        >
-                            {!isCollapsed && (
-                                <div className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-r-full bg-white" />
-                            )}
-                            <Shield className="h-4 w-4 flex-shrink-0 text-white" />
-                            {!isCollapsed && (
-                                <div>
-                                    <p className="text-xs font-medium text-white whitespace-nowrap">
-                                        Manajemen Akun
-                                    </p>
-                                    <p className="text-[10px] text-blue-100 whitespace-nowrap">
-                                        Kelola User & Role
-                                    </p>
-                                </div>
-                            )}
+                    {menuItems.map((item) => {
+                        const isActive = pathname === item.href;
+                        const Icon = item.icon;
 
-                            {isCollapsed && (
-                                <div className="absolute left-full ml-2 hidden rounded-md bg-slate-800 px-2 py-1.5 text-xs text-white shadow-lg group-hover:block z-50 whitespace-nowrap">
-                                    Manajemen Akun
-                                </div>
-                            )}
-                        </div>
-                    </li>
+                        return (
+                            <li key={item.href}>
+                                <Link href={item.href}>
+                                    <div
+                                        className={cn(
+                                            "group relative flex items-center gap-2 rounded-lg px-2 py-2 transition-all duration-200",
+                                            isActive
+                                                ? "bg-gradient-to-r from-blue-600 to-indigo-600 shadow-md"
+                                                : "hover:bg-blue-50",
+                                            isCollapsed && "justify-center"
+                                        )}
+                                    >
+                                        {isActive && !isCollapsed && (
+                                            <div className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-r-full bg-white" />
+                                        )}
+
+                                        <Icon className={cn(
+                                            "h-4 w-4 flex-shrink-0 transition-colors",
+                                            isActive ? "text-white" : "text-slate-500 group-hover:text-blue-600"
+                                        )} />
+
+                                        {!isCollapsed && (
+                                            <div className="overflow-hidden">
+                                                <p className={cn(
+                                                    "text-xs font-medium whitespace-nowrap transition-colors",
+                                                    isActive ? "text-white" : "text-slate-700 group-hover:text-blue-600"
+                                                )}>
+                                                    {item.title}
+                                                </p>
+                                                <p className={cn(
+                                                    "text-[10px] whitespace-nowrap",
+                                                    isActive ? "text-blue-100" : "text-slate-400"
+                                                )}>
+                                                    {item.description}
+                                                </p>
+                                            </div>
+                                        )}
+
+                                        {isCollapsed && (
+                                            <div className="absolute left-full ml-2 hidden rounded-md bg-slate-800 px-2 py-1.5 text-xs text-white shadow-lg group-hover:block z-50 whitespace-nowrap">
+                                                {item.title}
+                                            </div>
+                                        )}
+                                    </div>
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
             </nav>
 
-            {/* User Info Footer - EXACT COPY FROM TABULASI */}
+            {/* User Info Footer - MATCHING TABULASI STYLE EXACTLY */}
             <div className="absolute bottom-0 left-0 right-0 border-t border-slate-200 bg-gradient-to-r from-slate-50 to-blue-50">
                 {user ? (
                     <div className={cn(
@@ -202,7 +241,7 @@ export default function AdminSidebar({ isCollapsed, onToggle }: AdminSidebarProp
                                                 ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
                                                 : "bg-gradient-to-r from-emerald-500 to-teal-500 text-white"
                                         )}>
-                                            <Shield className="w-2.5 h-2.5" />
+                                            <User className="w-2.5 h-2.5" />
                                             {user.role === 'INTERNAL' ? 'Admin' : 'Satker'}
                                         </span>
                                     </div>
