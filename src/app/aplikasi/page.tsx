@@ -176,7 +176,7 @@ export default function AplikasiPage() {
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    onClick={() => window.open('/admin', '_blank')}
+                                    onClick={() => window.location.href = '/admin'}
                                     className="group p-6 rounded-2xl border-2 border-slate-800 bg-slate-900 cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-lg"
                                 >
                                     <div className="flex items-center gap-4">
