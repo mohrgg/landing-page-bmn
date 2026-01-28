@@ -51,7 +51,7 @@ const applications: AppItem[] = [
         id: 'inventarisasi',
         name: 'Inventarisasi BMN',
         description: 'Sistem manajemen inventarisasi dan opname aset BMN',
-        url: 'http://inventarisasi.bmn.local:3003',
+        url: 'http://inventarisasi.bmn.local:3002',
         icon: <Package className="w-8 h-8" />,
         color: 'text-purple-600',
         bgColor: 'bg-purple-50 hover:bg-purple-100 border-purple-200',
@@ -98,7 +98,7 @@ export default function AplikasiPage() {
             setIsLoginModalOpen(true);
         } else {
             const targetUrl = getAppUrl(url);
-            window.open(targetUrl, '_blank');
+            window.location.href = targetUrl;
         }
     };
 
